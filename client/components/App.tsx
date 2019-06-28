@@ -1,10 +1,18 @@
-import * as React from 'react';
+import React from "react";
+import Header from "./Header.tsx";
+import Body from "./Body.tsx";
+import Footer from "./Footer.tsx";
 
-export interface AppProps { compiler: string; framework: string;}
+export class App extends React.Component<any, any> {
 
-export class App extends React.Component<AppProps, {}> {
   render() {
-    return ( <h1>Hello {this.props.compiler} and {this.props.framework}!</h1>);
+    return (
+        <div>
+            <Header />
+            <Body />
+            <Footer />
+        </div>
+    );
   }
 }
 
