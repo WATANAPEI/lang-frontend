@@ -1,12 +1,11 @@
 import * as React from "react";
 
 function Body() {
-    return(
+  return (
     <div>
-        <h2>Body</h2>
+      <h2>Body</h2>
     </div>
-    );
+  );
 }
 
 export default Body;
-

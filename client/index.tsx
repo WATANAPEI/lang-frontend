@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import { App } from './components/App.tsx';
+// @ts-ignore
+import { App } from "./components/App.tsx";
 
-const title = "Hello, react with typescript";
 ReactDOM.render(
-    <App compiler="TypeScript" framework="React" />,
-    document.getElementById('app')
+  <App compiler="TypeScript" framework="React" />,
+  document.getElementById("app")
 );
