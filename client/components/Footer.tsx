@@ -1,9 +1,23 @@
-import * as React from "react";
+import React from "react";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
-function Footer() {
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    footerBar: {
+      width: "100%"
+    }
+  })
+);
+
+interface Props {
+  text: string;
+}
+
+function Footer({ text }: Props) {
+  const classes = useStyles();
   return (
-    <div>
-      <h3>Footer</h3>
+    <div className={classes.footerBar}>
+      <h3>{text}</h3>
     </div>
   );
 }
