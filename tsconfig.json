@@ -6,7 +6,7 @@
     "sourceMap": true,
     "outDir": "/www/app/lang/words/",
     "strict": true,
-    "noImplicitAny": true,
+//    "noImplicitAny": true,
     "esModuleInterop": true
   },
   "include": [

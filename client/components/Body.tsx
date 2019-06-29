@@ -1,11 +1,15 @@
 import * as React from "react";
 
-function Body() {
+interface Props {
+  text: string;
+}
+
+const Body: React.SFC<Props> = (props: Props) => {
   return (
     <div>
-      <h2>Body</h2>
+      <h2>{props.text}</h2>
     </div>
   );
-}
+};
 
 export default Body;
