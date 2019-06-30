@@ -12,8 +12,19 @@ const useStyles = makeStyles((theme: Theme) =>
     textDisplay: {
       maxWidth: 800,
       maxHeight: 500,
-      margin: "100px auto",
-      padding: "20px 0 20px"
+      margin: "50px auto",
+//      padding: "20px 0 20px",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      alignItems: "center"
+    },
+    wordDisplay: {
+      maxWidth: 600,
+      maxHeight: 200,
+      height: "40%"
+//      margin: "0 auto",
+//      padding: "50px 50px"
     }
   })
 );
@@ -22,7 +33,8 @@ function Body({ text }: Props) {
   const classes = useStyles();
   return (
     <Card className={classes.textDisplay}>
-      <CardContent>{text}</CardContent>
+      <CardContent className={classes.wordDisplay}>{text}</CardContent>
+      <CardContent className={classes.wordDisplay}>{text}</CardContent>
     </Card>
   );
 }
