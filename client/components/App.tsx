@@ -11,7 +11,7 @@ export class App extends React.Component<any, any> {
     return (
       <div>
         <HeaderBar text="This is Header" />
-        <Body text="This is Body" />
+        <Body />
         <Footer text="This is footer" />
       </div>
     );
