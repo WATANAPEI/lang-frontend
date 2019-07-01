@@ -4,17 +4,21 @@ import HeaderBar from "./HeaderBar.tsx";
 // @ts-ignore
 import Main from "./Main.tsx";
 // @ts-ignore
-import Footer from "./Footer.tsx";
-// @ts-ignore
 import SideBar from "./SideBar.tsx";
+import Grid from "@material-ui/core/Grid";
 
 export function App() {
   return (
-    <div>
-      <HeaderBar text="This is a Header" />
-      <Main />
-      <SideBar text="this is sidebar" />
-      <Footer text="This is footer" />
-    </div>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <HeaderBar text="This is a Header" />
+      </Grid>
+      <Grid item xs={3}>
+        <SideBar text="sidebar" />
+      </Grid>
+      <Grid item xs={9}>
+        <Main />
+      </Grid>
+    </Grid>
   );
 }
