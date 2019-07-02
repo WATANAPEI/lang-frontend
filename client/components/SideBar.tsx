@@ -8,7 +8,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     sideBar: {
       color: "red",
-      margin: "0 5px"
+      margin: "0 5px",
+      height: "100%"
     },
     li: {
       listStyle: "none"

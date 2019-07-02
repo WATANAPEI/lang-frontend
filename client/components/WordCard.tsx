@@ -10,13 +10,13 @@ interface Props {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     wordCard: {
-//      maxWidth: 800,
-//      maxHeight: 500,
 //      margin: "50px auto",
 //      padding: "20px 0 20px",
+      height: "100%",
+      width: "100%",
       display: "flex",
       flexDirection: "column",
-      justifyContent: "space-between",
+      justifyContent: "center",
       alignItems: "center"
     },
     wordCardContent: {
@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme: Theme) =>
 //      height: "40%"
 //      margin: "0 auto",
 //      padding: "50px 50px"
+//      height: "75%",
+//      width: "75%",
+      fontSize: "40px"
     }
   })
 );

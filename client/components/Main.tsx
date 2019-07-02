@@ -3,16 +3,15 @@ import React from "react";
 import WordCard from "./WordCard.tsx";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import Button from "@material-ui/core/Button"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     mainContainer: {
       width: "100%",
       height: "100%",
-      spacing: "2",
-      justifyContent: "stretch",
       alignItems: "center"
     },
     navCard: {
@@ -21,6 +20,8 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "space-between"
     },
     wordCardGrid: {
+      width: "100%",
+      height: "100%"
     }
   })
 );
@@ -28,19 +29,19 @@ const useStyles = makeStyles((theme: Theme) =>
 function Main() {
   const classes = useStyles();
   return (
-    <Grid container className={classes.mainContainer}>
+    <Grid container spacing={2} className={classes.mainContainer}>
       <Grid item xs={1} className={classes.navCard}>
-        <Card>
-          <CardContent>left</CardContent>
-        </Card>
+        <Button>
+          <ArrowBackIcon />
+        </Button>
       </Grid>
       <Grid item xs={10} className={classes.wordCardGrid}>
         <WordCard text="this is a word card." />
       </Grid>
       <Grid item xs={1} className={classes.navCard}>
-        <Card>
-          <CardContent>right</CardContent>
-        </Card>
+        <Button>
+          <ArrowForwardIcon />
+        </Button>
       </Grid>
     </Grid>
   );
