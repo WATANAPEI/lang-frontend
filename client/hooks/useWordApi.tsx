@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 interface WordResponse {
   word: string;
@@ -7,18 +7,17 @@ interface WordResponse {
   meaningLanguage: string;
 }
 
-interface UseWordApi {
-  data: {
-    wordResponse: wordResponse;
-    isLoading: boolean;
-    isError: boolean;
-  };
-  setUrl: (string) => void;
+interface ReturnData {
+  wordResponse: WordResponse;
+  isLoading: boolean;
+  isError: boolean;
 }
 
-
-const useWordApi = (initialUrl: string, initialWord: WordResponse): UseWordApi => {
-  const [word, setWord] = useState(initialWord);
+const useWordApi = (
+  initialUrl: string,
+  initialWord: WordResponse
+): [ReturnData, React.Dispatch<React.SetStateAction<string>>] => {
+  const [wordResponse, setWord] = useState(initialWord);
   const [url, setUrl] = useState(initialUrl);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -30,7 +29,8 @@ const useWordApi = (initialUrl: string, initialWord: WordResponse): UseWordApi =
 
       try {
         const response = await fetch(url);
-        setWord(response.body);
+        const json: WordResponse = await response.json();
+        setWord(json);
       } catch (error) {
         setIsError(true);
       }
@@ -40,7 +40,7 @@ const useWordApi = (initialUrl: string, initialWord: WordResponse): UseWordApi =
     fetchData();
   }, [url]);
 
-  return [{ word, isLoading, isError }, setUrl];
+  return [{ wordResponse, isLoading, isError }, setUrl];
 };
 
 export default useWordApi;
