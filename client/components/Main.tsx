@@ -34,10 +34,11 @@ function Main() {
   const [{ wordResponse, isLoading, isError }, doFetch] = useWordApi(
     "http://localhost:3000/words/1",
     {
+      id: 1,
       word: "aa",
       meaning: "bb",
-      wordLanguage: "English",
-      meaningLanguage: "Tumbuka"
+      wordLanguageID: 1,
+      meaningLanguageID: 2
     }
   );
   return (
@@ -45,8 +46,10 @@ function Main() {
       <Grid item xs={1} className={classes.navCard}>
         <Button
           onClick={() => {
-            setId(id + 1);
-            doFetch("http://localhost:3000/words/${id}");
+            if (id > 1) {
+              setId(id - 1);
+              doFetch(`http://localhost:3000/words/${id}`);
+            }
           }
        } >
           <ArrowBackIcon />
@@ -61,7 +64,12 @@ function Main() {
         )}
       </Grid>
       <Grid item xs={1} className={classes.navCard}>
-        <Button>
+        <Button
+          onClick={() => {
+            setId(id + 1);
+            doFetch(`http://localhost:3000/words/${id}`);
+          }
+       } >
           <ArrowForwardIcon />
         </Button>
       </Grid>
