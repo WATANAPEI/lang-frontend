@@ -27,7 +27,7 @@ export function App() {
   return (
     <Grid container spacing={2} className={classes.headerBar}>
       <Grid item xs={12}>
-        <HeaderBar text="This is a Header" />
+        <HeaderBar text="Lang Project" />
       </Grid>
       <Grid item xs={3} className={classes.sideBar}>
         <SideBar text="sidebar" />

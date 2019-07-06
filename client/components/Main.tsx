@@ -37,7 +37,7 @@ interface WordResponse {
 }
 
 interface ReturnData {
-  wordResponse: WordResponse;
+  word: WordResponse;
   isLoading: boolean;
   isError: boolean;
 }
@@ -45,16 +45,16 @@ interface ReturnData {
 function Main() {
   const classes = useStyles();
   const [id, setId] = useState(2);
-  const [{ wordResponse, isLoading, isError }, doFetch]: [ReturnData, React.Dispatch<React.SetStateAction<string>>] = useWordApi(
-    "http://localhost:3000/words/1",
-    {
-      id: 1,
-      word: "aa",
-      meaning: "bb",
-      wordLanguageID: 1,
-      meaningLanguageID: 2
-    }
-  );
+  const [{ word, isLoading, isError }, doFetch]: [
+    ReturnData,
+    React.Dispatch<React.SetStateAction<string>>
+  ] = useWordApi("http://localhost:3000/words/1", {
+    id: 1,
+    word: "aa",
+    meaning: "bb",
+    wordLanguageID: 1,
+    meaningLanguageID: 2
+  });
   return (
     <Grid container spacing={2} className={classes.mainContainer}>
       <Grid item xs={1} className={classes.navCard}>
@@ -64,26 +64,22 @@ function Main() {
               setId(id - 1);
               doFetch(`http://localhost:3000/words/${id}`);
             }
-          }
-       } >
+          }}
+        >
           <ArrowBackIcon />
         </Button>
       </Grid>
       <Grid item xs={10} className={classes.wordCardGrid}>
         {isError && <div>Something went wrong ...</div>}
-        {isLoading ? (
-          <div>Loading...</div>
-        ) : (
-          <WordCard {...wordResponse} />
-        )}
+        {isLoading ? <div>Loading...</div> : <WordCard {...word} />}
       </Grid>
       <Grid item xs={1} className={classes.navCard}>
         <Button
           onClick={() => {
             setId(id + 1);
             doFetch(`http://localhost:3000/words/${id}`);
-          }
-       } >
+          }}
+        >
           <ArrowForwardIcon />
         </Button>
       </Grid>

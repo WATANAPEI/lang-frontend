@@ -10,12 +10,12 @@ interface WordResponse {
   meaningLanguageID: number;
 }
 
-function WordCard(wordResponse: WordResponse) {
+function WordCard(word: WordResponse) {
   return (
     <div className={styles.flipCard}>
       <div className={styles.flipCardInner}>
-        <div className={styles.flipCardFront}>{wordResponse.word}</div>
-        <div className={styles.flipCardBack}>{wordResponse.meaning}</div>
+        <div className={styles.flipCardFront}>{word.word}</div>
+        <div className={styles.flipCardBack}>{word.meaning}</div>
       </div>
     </div>
   );

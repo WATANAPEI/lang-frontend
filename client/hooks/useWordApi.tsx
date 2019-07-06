@@ -9,7 +9,7 @@ interface WordResponse {
 }
 
 interface ReturnData {
-  wordResponse: WordResponse;
+  word: WordResponse;
   isLoading: boolean;
   isError: boolean;
 }
@@ -36,7 +36,7 @@ const useWordApi = (
   initialUrl: string,
   initialWord: WordResponse
 ): [ReturnData, React.Dispatch<React.SetStateAction<string>>] => {
-  const [wordResponse, setWord] = useState(initialWord);
+  const [word, setWord] = useState(initialWord);
   const [url, setUrl] = useState(initialUrl);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -71,7 +71,7 @@ const useWordApi = (
     fetchData();
   }, [url]);
 
-  return [{ wordResponse, isLoading, isError }, setUrl];
+  return [{ word, isLoading, isError }, setUrl];
 };
 
 export default useWordApi;
