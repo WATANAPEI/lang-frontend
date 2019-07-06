@@ -28,10 +28,24 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+interface WordResponse {
+  id: number;
+  word: string;
+  meaning: string;
+  wordLanguageID: number;
+  meaningLanguageID: number;
+}
+
+interface ReturnData {
+  wordResponse: WordResponse;
+  isLoading: boolean;
+  isError: boolean;
+}
+
 function Main() {
   const classes = useStyles();
-  const [id, setId] = useState(1);
-  const [{ wordResponse, isLoading, isError }, doFetch] = useWordApi(
+  const [id, setId] = useState(2);
+  const [{ wordResponse, isLoading, isError }, doFetch]: [ReturnData, React.Dispatch<React.SetStateAction<string>>] = useWordApi(
     "http://localhost:3000/words/1",
     {
       id: 1,
@@ -60,7 +74,7 @@ function Main() {
         {isLoading ? (
           <div>Loading...</div>
         ) : (
-          <WordCard text={wordResponse.word} />
+          <WordCard {...wordResponse} />
         )}
       </Grid>
       <Grid item xs={1} className={classes.navCard}>
