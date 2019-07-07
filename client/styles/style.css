@@ -16,10 +16,6 @@
   transform-style: preserve-3d;
 }
 
-.flipCard:hover .flipCardInner {
-  transform: rotateY(180deg);
-}
-
 .flipCardFront, .flipCardBack {
   position: absolute;
   width: 100%;
