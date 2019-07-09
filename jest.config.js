@@ -5,6 +5,9 @@ module.exports = {
   },
   verbose: true,
   testRegex: "(/__test__/.*|(\\.|/)(test|spec))\\.tsx?$",
+  moduleNameMapper: {
+    "\\.(css)$": "identity-obj-proxy"
+  },
   moduleFileExtensions: [
     "ts",
     "tsx",

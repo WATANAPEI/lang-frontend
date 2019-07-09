@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
   entry: path.resolve(__dirname, "./client/index.tsx"),
@@ -10,7 +11,8 @@ module.exports = {
           {
             loader: "ts-loader"
           }
-        ]
+        ],
+        exclude: [/node_modules/, /test/]
       },
       {
         test: /\.(js)$/,
@@ -23,7 +25,7 @@ module.exports = {
             }
           }
         ],
-        exclude: /node_modules/
+        exclude: [/node_modules/, /test/]
       },
       {
         test: /\.css$/,

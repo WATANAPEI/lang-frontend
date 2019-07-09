@@ -16,7 +16,7 @@ function WordCard(word: WordResponse) {
     <div className={styles.flipCard}>
       <div
         className={styles.flipCardInner}
-        onClick={(event: React.MouseEvent<HTMLInputElement>): void => {
+        onClick={(event: React.MouseEvent<HTMLInputElement>) => {
           if (!isFlipped) {
             event.currentTarget.style.transform = "rotateY(180deg)";
             setIsFlipped(true);
@@ -26,8 +26,10 @@ function WordCard(word: WordResponse) {
           }
         }}
       >
-        <div className={styles.flipCardFront}>{word.word}</div>
-        <div className={styles.flipCardBack}>{word.meaning}</div>
+        <React.Fragment>
+          <div className={styles.flipCardFront}>{word.word}</div>
+          <div className={styles.flipCardBack}>{word.meaning}</div>
+        </React.Fragment>
       </div>
     </div>
   );

@@ -18,6 +18,13 @@ module.exports = merge(base, {
       key: fs.readFileSync("/etc/ssl/certs/localhost-key.pem"),
       cert: fs.readFileSync("/etc/ssl/certs/localhost-crt.pem"),
       ca: fs.readFileSync("/etc/nginx/local_root_CA/rootCA.pem")
+    },
+    watchOptions: {
+      ignored: [
+        path.resolve(__dirname, "node_modules"),
+        path.resolve(__dirname, "client", "__test__"),
+        path.resolve(__dirname, "client", "__mocks__")
+      ]
     }
   }
 });

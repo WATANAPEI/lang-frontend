@@ -15,7 +15,7 @@ describe("</SideBar />", () => {
   it("render received texts", () => {
     const testText = "sideBar text";
     const wrapper = createShallow()(<SideBar text={testText} />);
-    console.log(wrapper.text());
+//    console.log(wrapper.text());
     expect(wrapper.text()).toEqual(
       expect.stringContaining(testText));
   });

@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "esnext",
     "module": "commonjs",
     "jsx": "react",
     "sourceMap": true,
     "outDir": "/www/app/lang/words/",
     "strict": true,
-//    "noImplicitAny": true,
     "esModuleInterop": true
   },
   "include": [
