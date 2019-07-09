@@ -1,6 +1,7 @@
 module.exports = {
   plugins: [
-    "prettier"
+    "prettier",
+    "react-hooks"
   ],
   extends: [
     "plugin:@typescript-eslint/recommended",
@@ -12,6 +13,8 @@ module.exports = {
         0
     ],
     "@typescript-eslint/indent": "ignore",
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hook/exhaustive-deps": "warn"
   }
 };
