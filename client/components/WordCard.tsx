@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "../styles/style.css";
 // @ts-ignore
 
-interface WordResponse {
+export interface WordResponse {
   id: number;
   word: string;
   meaning: string;
