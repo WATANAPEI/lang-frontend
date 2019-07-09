@@ -1,9 +1,10 @@
 import React from "react";
-import { mount } from "enzyme";
+import { mount, shallow } from "enzyme";
 // @ts-ignore
 import WordCard from "../components/WordCard.tsx";
 // @ts-ignore
 import { WordResponse } from "../components/WordCard.tsx";
+import toJson from "enzyme-to-json";
 
 describe("<WordCard />", () => {
   let testWord: WordResponse;
@@ -39,10 +40,13 @@ describe("<WordCard />", () => {
     wrapper.unmount();
   });
 
-  it("changes the state when clicked", () => {
+  it("check the mount rendering doesn't change before and after click", () => {
     const wrapper = mount(<WordCard {...testWord} />);
-//    const spy = jest.spyOn(wrapper, "
-//    expect(wrapper.state("isFlipped")).toEqual(false);
-
+    const wrapperString = wrapper.debug();
+    wrapper.find(".flipCardInner").simulate("click");
+    expect(wrapper.debug()).toEqual(wrapperString);
+    wrapper.find(".flipCardInner").simulate("click");
+    expect(wrapper.debug()).toEqual(wrapperString);
+//    console.log(`wrapperString: ${wrapperString}`);
   });
 });
