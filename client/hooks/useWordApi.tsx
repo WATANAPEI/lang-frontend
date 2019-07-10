@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-interface WordResponse {
+export interface WordResponse {
   id: number;
   word: string;
   meaning: string;
@@ -8,7 +8,7 @@ interface WordResponse {
   meaningLanguageID: number;
 }
 
-interface ReturnData {
+export interface ReturnData {
   word: WordResponse;
   isLoading: boolean;
   isError: boolean;
@@ -32,10 +32,14 @@ interface ReturnJson {
   data: RawData;
 }
 
-const useWordApi = (
-  initialUrl: string,
-  initialWord: WordResponse
-): [ReturnData, React.Dispatch<React.SetStateAction<string>>] => {
+interface UseWordApi {
+  (initialUrl: string, initialWord: WordResponse): [
+    ReturnData,
+    React.Dispatch<React.SetStateAction<string>>
+  ];
+}
+
+const useWordApi: UseWordApi = (initialUrl, initialWord) => {
   const [word, setWord] = useState(initialWord);
   const [url, setUrl] = useState(initialUrl);
   const [isLoading, setIsLoading] = useState(false);
