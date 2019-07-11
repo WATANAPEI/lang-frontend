@@ -1,8 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { shallow, mount } from "enzyme";
+import { act } from "react-dom/test-utils";
+import { shallow, mount, ReactWrapper } from "enzyme";
 // @ts-ignore
 import useWordApi, { WordResponse, ReturnData } from "../hooks/useWordApi.tsx";
+//import Response from "isomorphic-fetch";
 
 interface UseWordApi {
   (initialUrl: string, initialWord: WordResponse): [
@@ -11,47 +13,96 @@ interface UseWordApi {
   ];
 }
 
-describe("test hooks", () => {
-  let mockSuccessResponse: WordResponse;
-  let mockFailedResponse;
-  let mockSuccessJsonPromise: Promise<WordResponse>;
-  let mockFailedJsonPromise: Promise<{}>;
-  let mockFetchPromise;
-  let mockReactComponent: (hook: UseWordApi) => JSX.Element;
+let mockWordSuccessResponse: WordResponse;
+let mockWordFailedResponse;
+let mockSuccessJsonPromise: Promise<WordResponse>;
+let mockFailedJsonPromise: Promise<{}>;
+let mockFetchPromise: (status: "success" | "fail") => Promise<Response>;
+//let MockReactComponent: (hook: UseWordApi) => React.SFC;
+let mockSuccessResponse: Promise<Response>;
+let mockFailedResponse: Promise<{}>;
 
+
+describe("test hooks", () => {
   beforeEach(() => {
-    mockSuccessResponse = {
+    mockWordSuccessResponse = {
       id: 100,
       word: "sucess word",
       meaning: "success meaning",
       wordLanguageID: 1,
       meaningLanguageID: 2
     };
-    mockFailedResponse = {};
-    mockSuccessJsonPromise = Promise.resolve(mockSuccessResponse);
-    mockFailedJsonPromise = Promise.resolve(mockFailedResponse);
+    mockWordFailedResponse = {};
+    mockSuccessJsonPromise = Promise.resolve(mockWordSuccessResponse);
+    mockFailedJsonPromise = Promise.resolve(mockWordFailedResponse);
+//    mockSuccessResponse = new Response(
+//      new Blob([JSON.stringify({ json: () => mockSuccessJsonPromise })], {
+//        type: "application/json"
+//      })
+//    );
+    let myBlob = "test";
+    mockSuccessResponse = Promise.resolve(mockSuccessJsonPromise);
+    mockFailedResponse = Promise.resolve(mockFailedJsonPromise);
+    //mockSuccessResponse = new Response(myBlob);
+    //mockFailedResponse = new Response(myBlob);
+//      new Blob(JSON.stringify({ json: () => mockFailedJsonPromise }))
+//    );
+
+//    mockSuccessResponse = { json: () => mockSuccessJsonPromise };
+//    mockFailedResponse = { json: () => mockFailedResponse };
     mockFetchPromise = (status: "success" | "fail") => {
       return new Promise((resolve, reject) => {
         if (status === "success") {
-          resolve({ json: () => mockSuccessJsonPromise });
+          resolve(mockSuccessResponse);
         } else {
-          reject({ json: () => mockFailedJsonPromise });
+          reject(mockFailedResponse);
         }
       });
     };
 
-    mockReactComponent = (hook: UseWordApi) => {
-      return <div {...hook} />;
-    };
-  });
+    });
 
   it("returns WordResponse and setUrl function", () => {
-    //console.log(mockReactComponent);
-    
+    //console.log(MockReactComponent);
+    window.fetch = jest.fn().mockImplementation(() => mockFetchPromise("success"));
+    const spy = jest.spyOn(window, "fetch");
+    function MockReactComponent() {
+      const [{ word, isLoading, isError }, doFetch]: [
+        ReturnData,
+        React.Dispatch<React.SetStateAction<string>>
+      ] = useWordApi("http://localhost:3000/words/1", {
+        id: 1,
+        word: "aa",
+        meaning: "bb",
+        wordLanguageID: 1,
+        meaningLanguageID: 2
+      });
+      return (
+        <React.Fragment>
+          {word.id}
+        </React.Fragment>
+      );
+    }
+//    let wrapper: ReactWrapper;
+//    act(() => {
+//      wrapper = mount(<MockReactComponent />);
+//      done();
+//    });
+//    expect(spy).toHaveBeenCalled();
+//    act(() => {
+//      wrapper.unmount();
+//    });
+    let wrapper!: ReactWrapper;
+    act(() => {
+      wrapper = mount(<MockReactComponent />);
+    });
+    return Promise.
+      resolve(wrapper).then(() => {
+      //  wrapper.update();
+        expect(spy).toHaveBeenCalledTimes(1);
+      });
   });
   it.todo("accesses specified url and return response");
   it.todo("display loading text during loading");
   it.todo("display error message when load failed");
-
 });
-
