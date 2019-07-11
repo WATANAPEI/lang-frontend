@@ -4,7 +4,6 @@ import { act } from "react-dom/test-utils";
 import { shallow, mount, ReactWrapper } from "enzyme";
 // @ts-ignore
 import useWordApi, { WordResponse, ReturnData } from "../hooks/useWordApi.tsx";
-//import Response from "isomorphic-fetch";
 
 interface UseWordApi {
   (initialUrl: string, initialWord: WordResponse): [
@@ -18,10 +17,8 @@ let mockWordFailedResponse;
 let mockSuccessJsonPromise: Promise<WordResponse>;
 let mockFailedJsonPromise: Promise<{}>;
 let mockFetchPromise: (status: "success" | "fail") => Promise<Response>;
-//let MockReactComponent: (hook: UseWordApi) => React.SFC;
 let mockSuccessResponse: Promise<Response>;
 let mockFailedResponse: Promise<{}>;
-
 
 describe("test hooks", () => {
   beforeEach(() => {
@@ -64,7 +61,9 @@ describe("test hooks", () => {
 
   it("returns WordResponse and setUrl function", () => {
     //console.log(MockReactComponent);
-    window.fetch = jest.fn().mockImplementation(() => mockFetchPromise("success"));
+    window.fetch = jest
+      .fn()
+      .mockImplementation(() => mockFetchPromise("success"));
     const spy = jest.spyOn(window, "fetch");
     function MockReactComponent() {
       const [{ word, isLoading, isError }, doFetch]: [
@@ -77,21 +76,8 @@ describe("test hooks", () => {
         wordLanguageID: 1,
         meaningLanguageID: 2
       });
-      return (
-        <React.Fragment>
-          {word.id}
-        </React.Fragment>
-      );
+      return (<React.Fragment>{word.id}</React.Fragment>);
     }
-//    let wrapper: ReactWrapper;
-//    act(() => {
-//      wrapper = mount(<MockReactComponent />);
-//      done();
-//    });
-//    expect(spy).toHaveBeenCalled();
-//    act(() => {
-//      wrapper.unmount();
-//    });
     let wrapper!: ReactWrapper;
     act(() => {
       wrapper = mount(<MockReactComponent />);
@@ -99,8 +85,8 @@ describe("test hooks", () => {
     return Promise.
       resolve(wrapper).then(() => {
       //  wrapper.update();
-        expect(spy).toHaveBeenCalledTimes(1);
-      });
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
   });
   it.todo("accesses specified url and return response");
   it.todo("display loading text during loading");
