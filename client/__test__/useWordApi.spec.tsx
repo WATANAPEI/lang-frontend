@@ -17,9 +17,40 @@ let mockSuccessResponse: Response;
 let mockFailedResponse: Promise<{}>;
 let mockSuccessFetch: () => Promise<Response>;
 let mockFailedFetch: () => Promise<Response>;
+let mockDoFetch: jest.Mock;
+
+function MockReactComponent() {
+  const [{ word, isLoading, isError }, doFetch]: [
+    ReturnData,
+    React.Dispatch<React.SetStateAction<string>>
+  ] = useWordApi("", {
+    id: -1,
+    word: "Initialize error",
+    meaning: "Initialize error",
+    word_lang_id: -1,
+    meaning_lang_id: -1
+  });
+  return (
+    <React.Fragment>
+      <h1 id="id">{word.id}</h1>
+      <h1 id="word">{word.word}</h1>
+      <h1 id="meaning">{word.meaning}</h1>
+      <h1 id="word_lang_id">{word.wordLanguageID}</h1>
+      <h1 id="meaning_lang_id">{word.meaningLanguageID}</h1>
+      <h1 id="isLoading">{isLoading}</h1>
+      <h1 id="isError">{isError}</h1>
+      <button
+        id="doFetch" onClick={() => {
+          console.log("clicked!");
+          mockDoFetch = jest.fn(doFetch);
+          mockDoFetch("dummy URL")}}
+      />
+    </React.Fragment>
+  );
+}
 
 describe("test hooks", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     mockWordSuccessResponse = {
       data: {
         id: 100,
@@ -38,32 +69,8 @@ describe("test hooks", () => {
   });
 
   it("returns WordResponse and setUrl function", done => {
-    window.fetch = jest
-      .fn(mockSuccessFetch);
+    window.fetch = jest.fn(mockSuccessFetch);
     const spy = jest.spyOn(window, "fetch");
-    function MockReactComponent() {
-      const [{ word, isLoading, isError }, doFetch]: [
-        ReturnData,
-        React.Dispatch<React.SetStateAction<string>>
-      ] = useWordApi("", {
-        id: -1,
-        word: "Initialize error",
-        meaning: "Initialize error",
-        word_lang_id: -1,
-        meaning_lang_id: -1
-      });
-      return (
-        <React.Fragment>
-          <h1 id="id">{word.id}</h1>
-          <h1 id="word">{word.word}</h1>
-          <h1 id="meaning">{word.meaning}</h1>
-          <h1 id="word_lang_id">{word.wordLanguageID}</h1>
-          <h1 id="meaning_lang_id">{word.meaningLanguageID}</h1>
-          <h1 id="isLoading">{isLoading}</h1>
-          <h1 id="isError">{isError}</h1>
-        </React.Fragment>
-      );
-    }
     let wrapper!: ReactWrapper;
     act(() => {
       wrapper = mount(<MockReactComponent />);
@@ -86,6 +93,9 @@ describe("test hooks", () => {
         expect(wrapper.find("#meaning_lang_id").text()).toEqual(
           String(mockWordSuccessResponse.data.meaning_lang_id)
         );
+        wrapper.find("#doFetch").simulate("click");
+        wrapper.update();
+        expect(mockDoFetch).toHaveBeenCalledWith("dummy URL");
         done();
       });
     });
