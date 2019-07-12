@@ -56,6 +56,7 @@ const useWordApi: UseWordApi = (initialUrl, initialWord) => {
         const json: ReturnJson = await response.json();
         console.log(`json: ${JSON.stringify(json)}`);
         const data: RawData = json.data;
+        console.log(`data: ${JSON.stringify(data)}`);
         const word: WordResponse =
         {
           id: data.id,
