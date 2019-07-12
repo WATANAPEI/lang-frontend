@@ -50,7 +50,7 @@ function MockReactComponent() {
 }
 
 describe("test hooks", () => {
-  beforeAll(() => {
+  beforeEach(() => {
     mockWordSuccessResponse = {
       data: {
         id: 100,
@@ -68,12 +68,15 @@ describe("test hooks", () => {
     mockFailedFetch = async () => Promise.reject(mockFailedResponse);
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("returns WordResponse and setUrl function", done => {
     window.fetch = jest.fn(mockSuccessFetch);
     const spy = jest.spyOn(window, "fetch");
-    let wrapper!: ReactWrapper;
     act(() => {
-      wrapper = mount(<MockReactComponent />);
+      const wrapper = mount(<MockReactComponent />);
       setImmediate(() => {
         wrapper.update();
         console.log(wrapper.debug());
@@ -96,6 +99,7 @@ describe("test hooks", () => {
         wrapper.find("#doFetch").simulate("click");
         wrapper.update();
         expect(mockDoFetch).toHaveBeenCalledWith("dummy URL");
+        wrapper.unmount();
         done();
       });
     });
