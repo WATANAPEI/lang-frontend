@@ -49,11 +49,11 @@ function Main() {
     ReturnData,
     React.Dispatch<React.SetStateAction<string>>
   ] = useWordApi("http://localhost:3000/words/1", {
-    id: 1,
-    word: "aa",
-    meaning: "bb",
-    wordLanguageID: 1,
-    meaningLanguageID: 2
+    id: -1,
+    word: "Initialize error",
+    meaning: "Initialize error",
+    wordLanguageID: -1,
+    meaningLanguageID: -1
   });
   return (
     <Grid container spacing={2} className={classes.mainContainer}>

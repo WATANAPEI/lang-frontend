@@ -52,7 +52,9 @@ const useWordApi: UseWordApi = (initialUrl, initialWord) => {
 
       try {
         const response = await fetch(url);
+        console.log(`reponse: ${JSON.stringify(response)}`);
         const json: ReturnJson = await response.json();
+        console.log(`json: ${JSON.stringify(json)}`);
         const data: RawData = json.data;
         const word: WordResponse =
         {
@@ -68,6 +70,7 @@ const useWordApi: UseWordApi = (initialUrl, initialWord) => {
         setWord(word);
       } catch (error) {
         setIsError(true);
+        console.log(`error: ${error}`);
       }
       setIsLoading(false);
     };
