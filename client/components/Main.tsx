@@ -59,6 +59,7 @@ function Main() {
     <Grid container spacing={2} className={classes.mainContainer}>
       <Grid item xs={1} className={classes.navCard}>
         <Button
+          id="prevButton"
           onClick={() => {
             if (id > 1) {
               setId(id - 1);
@@ -69,15 +70,16 @@ function Main() {
           <ArrowBackIcon />
         </Button>
       </Grid>
-      <Grid item xs={10} className={classes.wordCardGrid}>
-        {isError && <div>Something went wrong ...</div>}
-        {isLoading ? <div>Loading...</div> : <WordCard {...word} />}
+      <Grid item xs={10} id="mainGrid" className={classes.wordCardGrid}>
+        {isError && <div id="loadingErrorMessage">Something went wrong ...</div>}
+        {isLoading ? <div id="loadingMessage">Loading...</div> : <WordCard {...word} />}
       </Grid>
       <Grid item xs={1} className={classes.navCard}>
         <Button
+          id="nextButton"
           onClick={() => {
             setId(id + 1);
-            doFetch(`http://localhost:3000/words/${id}`);
+            doFetch(`http://localhost:3000/words/${encodeURIComponent(String(id))}`);
           }}
         >
           <ArrowForwardIcon />

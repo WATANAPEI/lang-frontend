@@ -15,6 +15,9 @@ module.exports = {
     "json",
     "jsx"
   ],
+  coveragePathIgnorePatterns: [
+    "<rootDir>/client/utils"
+  ],
   snapshotSerializers: ["enzyme-to-json/serializer"],
   setupFilesAfterEnv: ["<rootDir>/client/setupEnzyme.ts"]
 };
