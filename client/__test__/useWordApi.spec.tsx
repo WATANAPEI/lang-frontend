@@ -16,19 +16,14 @@ interface MockFetch {
   (accessedUrl: string): Promise<Response>;
 }
 
-let mockWordResponse: WordResponse;
-let mockResponse: Response;
-let mockFailedResponse: Promise<{}>;
-let mockSuccessFetch: MockFetch;
-let mockFailedFetch: MockFetch;
+interface MockFactory {
+  (condition: "success" | "failed", id: number, correctUrl: string): [
+    WordResponse,
+    MockFetch
+  ];
+}
+
 let mockDoFetch: jest.Mock;
-const mockNotFoundResponse: WordResponse = {
-  id: -2,
-  word: "Word Not Found",
-  meaning: "Meaning Not Found",
-  word_lang_id: -2,
-  meaning_lang_id: -2
-};
 
 function MockReactComponent(mockUrlList: string[]) {
   let i = 0;
@@ -68,11 +63,20 @@ function MockReactComponent(mockUrlList: string[]) {
   );
 }
 
-function mockFactory(
-  condition: "success" | "failed",
-  id: number,
-  correctUrl: string
-): MockFetch {
+const mockFactory: MockFactory = (condition, id, correctUrl) => {
+  let mockWordResponse: WordResponse;
+  let mockResponse: Response;
+  let mockFailedResponse: Promise<{}>;
+  let mockSuccessFetch: MockFetch;
+  let mockFailedFetch: MockFetch;
+  const mockNotFoundResponse: WordResponse = {
+    id: -2,
+    word: "Word Not Found",
+    meaning: "Meaning Not Found",
+    word_lang_id: -2,
+    meaning_lang_id: -2
+  };
+
   console.log(`mock ${id} is making`);
   if (condition === "success") {
     mockWordResponse = {
@@ -104,7 +108,7 @@ function mockFactory(
       console.log(`mockSuccessFetch was called`);
       return await Promise.resolve(mockResponse);
     };
-    return mockSuccessFetch;
+    return [mockWordResponse, mockSuccessFetch];
   } else {
     mockWordResponse = {
       data: {
@@ -133,7 +137,7 @@ function mockFactory(
       }
       return await Promise.resolve(mockResponse);
     };
-    return mockFailedFetch;
+    return [mockWordResponse, mockFailedFetch];
   }
 }
 
@@ -151,10 +155,15 @@ describe("test hooks", () => {
 
 //    const mockFetch = mockFactory("success", 1, mockUrlList[0]);
 //    window.fetch = jest.fn(mockFetch);
+    let mockWordArray: WordResponse[] = [];
+    let mockFetchArray: MockFetch[] = [];
+    [mockWordArray[0], mockFetchArray[0]] = mockFactory("success", 1, mockUrlList[0]);
+    [mockWordArray[1], mockFetchArray[1]] = mockFactory("success", 2, mockUrlList[1]);
+    [mockWordArray[2], mockFetchArray[2]] = mockFactory("success", 3, mockUrlList[2]);
     window.fetch = jest.fn().
-      mockImplementationOnce(mockFactory("success", 1, mockUrlList[0])).
-      mockImplementationOnce(mockFactory("success", 2, mockUrlList[1])).
-      mockImplementationOnce(mockFactory("success", 3, mockUrlList[2]));
+      mockImplementationOnce(mockFetchArray[0]).
+      mockImplementationOnce(mockFetchArray[1]).
+      mockImplementationOnce(mockFetchArray[2]);
     const fetchSpy = jest.spyOn(window, "fetch");
     act(() => {
       const wrapper = mount(<MockReactComponent {...mockUrlList} />);
@@ -163,19 +172,19 @@ describe("test hooks", () => {
         console.log(wrapper.debug());
         expect(fetchSpy).toHaveBeenCalledTimes(1);
         expect(wrapper.find("#id").text()).toEqual(
-          String(mockWordResponse.id)
+          String(mockWordArray[0].id)
         );
         expect(wrapper.find("#word").text()).toEqual(
-          mockWordResponse.word
+          mockWordArray[0].word
         );
         expect(wrapper.find("#meaning").text()).toEqual(
-          mockWordResponse.meaning
+          mockWordArray[0].meaning
         );
         expect(wrapper.find("#word_lang_id").text()).toEqual(
-          String(mockWordResponse.word_lang_id)
+          String(mockWordArray[0].word_lang_id)
         );
         expect(wrapper.find("#meaning_lang_id").text()).toEqual(
-          String(mockWordResponse.meaning_lang_id)
+          String(mockWordArray[0].meaning_lang_id)
         );
         wrapper.find("#doFetch").simulate("click");
         wrapper.update();
