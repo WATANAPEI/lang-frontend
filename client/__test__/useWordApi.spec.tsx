@@ -47,8 +47,8 @@ function MockReactComponent(mockUrlList: string[]) {
       <h1 id="meaning">{word.meaning}</h1>
       <h1 id="word_lang_id">{word.wordLanguageID}</h1>
       <h1 id="meaning_lang_id">{word.meaningLanguageID}</h1>
-      <h1 id="isLoading">{isLoading}</h1>
-      <h1 id="isError">{isError}</h1>
+      <h1 id="isLoading">{String(isLoading)}</h1>
+      <h1 id="isError">{String(isError)}</h1>
       <button
         id="doFetch"
         onClick={() => {
@@ -100,7 +100,7 @@ const mockFactory: MockFactory = (condition, id, correctUrl) => {
         mockResponse = new Response();
         mockResponse.json = async () => {
           console.log(`mockResponse failed`);
-          return await Promise.resolve({
+          return await Promise.reject({
             data: mockNotFoundResponse
           });
         };
@@ -113,8 +113,8 @@ const mockFactory: MockFactory = (condition, id, correctUrl) => {
     mockWordResponse = {
       data: {
         id: `${-100 - id}`,
-        word: `sucess word ${-1 * id}`,
-        meaning: `success meaning ${-1 * id}`,
+        word: `failed word ${-1 * id}`,
+        meaning: `failed meaning ${-1 * id}`,
         word_lang_id: `${-10 - id}`,
         meaning_lang_id: `${-20 - id}`
       }
@@ -130,12 +130,12 @@ const mockFactory: MockFactory = (condition, id, correctUrl) => {
       } else {
         mockResponse = new Response();
         mockResponse.json = async () => {
-          return await Promise.resolve({
+          return await Promise.reject({
             data: mockNotFoundResponse
           });
         };
       }
-      return await Promise.resolve(mockResponse);
+      return await Promise.reject(mockResponse);
     };
     return [mockWordResponse, mockFailedFetch];
   }
@@ -199,6 +199,39 @@ describe("test hooks", () => {
       });
     });
   });
-  it.todo("display loading text during loading");
-  it.todo("display error message when load failed");
+  it("display loading text during loading", () => {
+  
+  });
+  it("display error message when load failed", done => {
+    const mockUrlList = [
+      "http://dummy.com/1",
+      "http://dummy.com/2",
+      "http://dummy.com/3"
+    ];
+    let mockWordArray: WordResponse[] = [];
+    let mockFetchArray: MockFetch[] = [];
+    for (let i = 0; i < mockUrlList.length; i++) {
+      [mockWordArray[i], mockFetchArray[i]] = mockFactory(
+        "failed",
+        i,
+        mockUrlList[i]
+      );
+    }
+    window.fetch = jest.fn().
+      mockImplementationOnce(mockFetchArray[0]).
+      mockImplementationOnce(mockFetchArray[1]).
+      mockImplementationOnce(mockFetchArray[2]);
+    const fetchSpy = jest.spyOn(window, "fetch");
+    act(() => {
+      const wrapper = mount(<MockReactComponent {...mockUrlList} />);
+      setImmediate(() => {
+        wrapper.update();
+        console.log(wrapper.debug());
+        expect(fetchSpy).toHaveBeenCalledTimes(1);
+        expect(wrapper.find("#isError").text()).toEqual("true");
+        wrapper.unmount();
+        done();
+      });
+    });
+  });
 });

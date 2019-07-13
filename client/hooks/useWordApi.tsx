@@ -71,7 +71,7 @@ const useWordApi: UseWordApi = (initialUrl, initialWord) => {
         setWord(word);
       } catch (error) {
         setIsError(true);
-        console.log(`error: ${error}`);
+        console.log(`error: ${JSON.stringify(error)}`);
       }
       setIsLoading(false);
     };
