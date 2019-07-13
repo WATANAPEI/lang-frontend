@@ -62,7 +62,7 @@ function Main() {
           onClick={() => {
             if (id > 1) {
               setId(id - 1);
-              doFetch(`http://localhost:3000/words/${id}`);
+              doFetch(`http://localhost:3000/words/${encodeURIComponent(String(id))}`);
             }
           }}
         >

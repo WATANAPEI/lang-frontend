@@ -141,25 +141,44 @@ const mockFactory: MockFactory = (condition, id, correctUrl) => {
   }
 }
 
+function wordResponseCheck(word: WordResponse, wrapper: ReactWrapper) {
+  expect(wrapper.find("#id").text()).toEqual(
+    String(word.id)
+  );
+  expect(wrapper.find("#word").text()).toEqual(
+    word.word
+  );
+  expect(wrapper.find("#meaning").text()).toEqual(
+    word.meaning
+  );
+  expect(wrapper.find("#word_lang_id").text()).toEqual(
+    String(word.word_lang_id)
+  );
+  expect(wrapper.find("#meaning_lang_id").text()).toEqual(
+    String(word.meaning_lang_id)
+  );
+}
+
 describe("test hooks", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it("returns WordResponse and setUrl function", done => {
+  it("returns WordResponse and setUrl function and access specified url", done => {
     const mockUrlList = [
       "http://dummy.com/1",
       "http://dummy.com/2",
       "http://dummy.com/3"
     ];
-
-//    const mockFetch = mockFactory("success", 1, mockUrlList[0]);
-//    window.fetch = jest.fn(mockFetch);
     let mockWordArray: WordResponse[] = [];
     let mockFetchArray: MockFetch[] = [];
-    [mockWordArray[0], mockFetchArray[0]] = mockFactory("success", 1, mockUrlList[0]);
-    [mockWordArray[1], mockFetchArray[1]] = mockFactory("success", 2, mockUrlList[1]);
-    [mockWordArray[2], mockFetchArray[2]] = mockFactory("success", 3, mockUrlList[2]);
+    for (let i = 0; i < mockUrlList.length; i++) {
+      [mockWordArray[i], mockFetchArray[i]] = mockFactory(
+        "success",
+        i,
+        mockUrlList[i]
+      );
+    }
     window.fetch = jest.fn().
       mockImplementationOnce(mockFetchArray[0]).
       mockImplementationOnce(mockFetchArray[1]).
@@ -171,21 +190,7 @@ describe("test hooks", () => {
         wrapper.update();
         console.log(wrapper.debug());
         expect(fetchSpy).toHaveBeenCalledTimes(1);
-        expect(wrapper.find("#id").text()).toEqual(
-          String(mockWordArray[0].id)
-        );
-        expect(wrapper.find("#word").text()).toEqual(
-          mockWordArray[0].word
-        );
-        expect(wrapper.find("#meaning").text()).toEqual(
-          mockWordArray[0].meaning
-        );
-        expect(wrapper.find("#word_lang_id").text()).toEqual(
-          String(mockWordArray[0].word_lang_id)
-        );
-        expect(wrapper.find("#meaning_lang_id").text()).toEqual(
-          String(mockWordArray[0].meaning_lang_id)
-        );
+        wordResponseCheck(mockWordArray[0], wrapper);
         wrapper.find("#doFetch").simulate("click");
         wrapper.update();
         expect(mockDoFetch).toHaveBeenCalledWith(mockUrlList[1]);
@@ -193,8 +198,6 @@ describe("test hooks", () => {
         done();
       });
     });
-  });
-  it("accesses specified url and return response", () => {
   });
   it.todo("display loading text during loading");
   it.todo("display error message when load failed");
