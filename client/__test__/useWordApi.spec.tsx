@@ -33,6 +33,7 @@ const mockNotFoundResponse: WordResponse = {
 function MockReactComponent(mockUrlList: string[]) {
   let i = 0;
   const initialUrl = mockUrlList[i];
+  console.log(`initialUrl: ${initialUrl}`);
   const [{ word, isLoading, isError }, doFetch]: [
     ReturnData,
     React.Dispatch<React.SetStateAction<string>>
@@ -43,7 +44,7 @@ function MockReactComponent(mockUrlList: string[]) {
     word_lang_id: -1,
     meaning_lang_id: -1
   });
-  console.log(`word: ${JSON.stringify(word)}`);
+  //console.log(`word: ${JSON.stringify(word)}`);
   return (
     <React.Fragment>
       <h1 id="id">{word.id}</h1>
@@ -58,7 +59,7 @@ function MockReactComponent(mockUrlList: string[]) {
         onClick={() => {
           i++;
           const mockUrl = mockUrlList[i];
-//          console.log(`clicked: ${mockUrl}`);
+          console.log(`clicked: ${mockUrl}`);
           mockDoFetch = jest.fn(doFetch);
           mockDoFetch(mockUrl);
         }}
@@ -72,6 +73,7 @@ function mockFactory(
   id: number,
   correctUrl: string
 ): MockFetch {
+  console.log(`mock ${id} is making`);
   if (condition === "success") {
     mockWordResponse = {
       id: `${100 + id}`,
@@ -80,6 +82,7 @@ function mockFactory(
       word_lang_id: `${10 + id}`,
       meaning_lang_id: `${20 + id}`
     };
+    console.log(`mock ${id} has mockWordResponse ${mockWordResponse.id}`);
     mockSuccessFetch = async (accessedUrl: string) => {
       if (accessedUrl == correctUrl) {
         mockResponse = new Response();
@@ -142,14 +145,16 @@ describe("test hooks", () => {
   it("returns WordResponse and setUrl function", done => {
     const mockUrlList = [
       "http://dummy.com/1",
-      "http://dummy.com/2"
+      "http://dummy.com/2",
+      "http://dummy.com/3"
     ];
 
 //    const mockFetch = mockFactory("success", 1, mockUrlList[0]);
 //    window.fetch = jest.fn(mockFetch);
     window.fetch = jest.fn().
       mockImplementationOnce(mockFactory("success", 1, mockUrlList[0])).
-      mockImplementationOnce(mockFactory("success", 2, mockUrlList[1]));
+      mockImplementationOnce(mockFactory("success", 2, mockUrlList[1])).
+      mockImplementationOnce(mockFactory("success", 3, mockUrlList[2]));
     const fetchSpy = jest.spyOn(window, "fetch");
     act(() => {
       const wrapper = mount(<MockReactComponent {...mockUrlList} />);
