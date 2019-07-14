@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export function App() {
+function App() {
   const classes = useStyles();
   return (
     <Grid container spacing={2} className={classes.headerBar}>
@@ -38,3 +38,5 @@ export function App() {
     </Grid>
   );
 }
+
+export default App;
