@@ -11,6 +11,7 @@ import { WordResponse } from "../hooks/useWordApi.tsx";
 // @ts-ignore
 import WordCard from "../components/WordCard.tsx";
 import "isomorphic-fetch";
+import toJson from "enzyme-to-json";
 
 describe("<Main />", () => {
   describe("this checks successive button clicks", () => {
@@ -38,10 +39,11 @@ describe("<Main />", () => {
       mockImplementationOnce(mockFetchArray[4]);
     const fetchSpy = jest.spyOn(window, "fetch");
     let wrapper: ReactWrapper;
-    it("mounts Main", done => {
+    it("shows load message and mounts Main", done => {
       act(() => {
         wrapper = createMount()(<Main />);
         setImmediate(() => {
+          expect(wrapper.find("div#loadingMessage").text()).toEqual("Loading...");
           wrapper.update();
           //console.log(wrapper.debug());
           expect(fetchSpy).toHaveBeenCalledTimes(1);
@@ -174,6 +176,30 @@ describe("<Main />", () => {
         });
       });
     });
-  it.todo("displays loading message during load");
+    it("doesn't move to the previous WordCard before the first one", done => {
+      const mockUrlList = [
+        "http://localhost:3000/words/1"
+      ];
+      const [mockWord, mockFetch]= mockFactory(
+          "success",
+          0,
+          mockUrlList[0]
+        );
+      window.fetch = jest.fn().
+        mockImplementationOnce(mockFetch);
+      const fetchSpy = jest.spyOn(window, "fetch");
+      act(() => {
+        const wrapper = createMount()(<Main />);
+        setImmediate(() => {
+          wrapper.update();
+          const prevSnapshot = toJson(wrapper, {noKey: false, mode: "deep"});
+          //console.log(prevSnapshot);
+          wrapper.find("button#prevButton").simulate("click");
+          expect(toJson(wrapper, {noKey: false, mode: "deep"})).toEqual(prevSnapshot);
+          wrapper.unmount();
+          done();
+        });
+      });
+    });
   });
 });
