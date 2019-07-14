@@ -1,6 +1,5 @@
 import React from "react";
-import { createMount, createShallow } from "@material-ui/core/test-utils";
-import { shallow, mount } from "enzyme";
+import { createShallow } from "@material-ui/core/test-utils";
 // @ts-ignore
 import App from "../components/App.tsx";
 
@@ -14,5 +13,8 @@ describe("<App />", () => {
   });
   it("has Main component", () => {
     expect(wrapper.find("Main").exists()).toEqual(true);
+  });
+  it("renders properly", () => {
+    expect(wrapper).toMatchSnapshot();
   });
 });

@@ -36,6 +36,7 @@
     "@types/babel__core": "^7.1.2",
     "@types/enzyme": "^3.10.1",
     "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@types/enzyme-to-json": "^1.5.3",
     "@types/es6-promise": "^3.3.0",
     "@types/isomorphic-fetch": "0.0.35",
     "@types/jest": "^24.0.15",

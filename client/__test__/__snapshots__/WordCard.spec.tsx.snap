@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<WordCard /> has 4 divs with flipCard/flipCardInner/flipCardFront/flipCardBack class 1`] = `
+<WordCard
+  id={1}
+  meaning="test meaning"
+  meaningLanguageID={2}
+  word="test word"
+  wordLanguageID={1}
+>
+  <div
+    className="flipCard"
+  >
+    <div
+      className="flipCardInner"
+      id="flipCardInner"
+      onClick={[Function]}
+    >
+      <div
+        className="flipCardFront"
+      >
+        test word
+      </div>
+      <div
+        className="flipCardBack"
+      >
+        test meaning
+      </div>
+    </div>
+  </div>
+</WordCard>
+`;

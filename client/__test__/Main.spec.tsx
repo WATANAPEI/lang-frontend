@@ -44,8 +44,10 @@ describe("<Main />", () => {
         wrapper = createMount()(<Main />);
         setImmediate(() => {
           expect(wrapper.find("div#loadingMessage").text()).toEqual("Loading...");
+          expect(wrapper).toMatchSnapshot();
           wrapper.update();
           //console.log(wrapper.debug());
+          expect(wrapper).toMatchSnapshot();
           expect(fetchSpy).toHaveBeenCalledTimes(1);
           expect(fetchSpy).toHaveBeenLastCalledWith(mockUrlList[0]);
           expect(wrapper.find(".flipCardFront").text()).toEqual(mockWordArray[0].word);
@@ -167,6 +169,7 @@ describe("<Main />", () => {
         const wrapper = createMount()(<Main />);
         setImmediate(() => {
           wrapper.update();
+          expect(wrapper).toMatchSnapshot();
           expect(fetchSpy).toHaveBeenCalledTimes(1);
           expect(wrapper.find("#loadingErrorMessage").text()).toEqual(
             "Something went wrong ..."

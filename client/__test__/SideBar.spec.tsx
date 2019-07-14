@@ -1,5 +1,5 @@
 import React from "react";
-import { createShallow, createMount } from "@material-ui/core/test-utils";
+import { createShallow } from "@material-ui/core/test-utils";
 // @ts-ignore
 import SideBar from "../components/SideBar.tsx";
 import MenuList from "@material-ui/core/MenuList";
@@ -10,7 +10,8 @@ describe("</SideBar />", () => {
     const testText = "sideBar text";
     const wrapper = createShallow()(<SideBar text={testText} />);
     expect(wrapper.find(MenuList)).toHaveLength(1);
-    expect(wrapper.find(MenuItem)).toBeTruthy();
+    expect(wrapper.find(MenuItem).exists()).toEqual(true);
+    expect(wrapper).toMatchSnapshot();
   });
   it("render received texts", () => {
     const testText = "sideBar text";
