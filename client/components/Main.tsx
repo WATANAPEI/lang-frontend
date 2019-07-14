@@ -44,7 +44,7 @@ interface ReturnData {
 
 function Main() {
   const classes = useStyles();
-  const [id, setId] = useState(2);
+  const [id, setId] = useState(1);
   const [{ word, isLoading, isError }, doFetch]: [
     ReturnData,
     React.Dispatch<React.SetStateAction<string>>
@@ -60,10 +60,14 @@ function Main() {
       <Grid item xs={1} className={classes.navCard}>
         <Button
           id="prevButton"
+          data-prev={id}
           onClick={() => {
             if (id > 1) {
-              setId(id - 1);
-              doFetch(`http://localhost:3000/words/${encodeURIComponent(String(id))}`);
+              const prevId = id - 1;
+              setId(prevId);
+              console.log(`id: ${id}`);
+              console.log(`prevId: ${prevId}`);
+              doFetch(`http://localhost:3000/words/${encodeURIComponent(String(prevId))}`);
             }
           }}
         >
@@ -77,9 +81,13 @@ function Main() {
       <Grid item xs={1} className={classes.navCard}>
         <Button
           id="nextButton"
+          data-next={id}
           onClick={() => {
-            setId(id + 1);
-            doFetch(`http://localhost:3000/words/${encodeURIComponent(String(id))}`);
+            const nextId = id + 1;
+            setId(nextId);
+            console.log(`id: ${id}`);
+            console.log(`nextId: ${nextId}`);
+            doFetch(`http://localhost:3000/words/${encodeURIComponent(String(nextId))}`);
           }}
         >
           <ArrowForwardIcon />

@@ -43,7 +43,7 @@ describe("<Main />", () => {
         wrapper = createMount()(<Main />);
         setImmediate(() => {
           wrapper.update();
-          console.log(wrapper.debug());
+          //console.log(wrapper.debug());
           expect(fetchSpy).toHaveBeenCalledTimes(1);
           expect(fetchSpy).toHaveBeenLastCalledWith(mockUrlList[0]);
           expect(wrapper.find(".flipCardFront").text()).toEqual(mockWordArray[0].word);
@@ -56,7 +56,7 @@ describe("<Main />", () => {
         wrapper.find("button#nextButton").simulate("click");
         setImmediate(() => {
           wrapper.update();
-          console.log(wrapper.debug());
+          //console.log(wrapper.debug());
           expect(fetchSpy).toHaveBeenCalledTimes(2);
           expect(fetchSpy).toHaveBeenLastCalledWith(mockUrlList[1]);
           expect(wrapper.find(".flipCardFront").text()).toEqual(mockWordArray[1].word);
@@ -69,7 +69,7 @@ describe("<Main />", () => {
         wrapper.find("button#nextButton").simulate("click");
         setImmediate(() => {
           wrapper.update();
-          console.log(wrapper.debug());
+          //console.log(wrapper.debug());
           expect(fetchSpy).toHaveBeenCalledTimes(3);
           expect(fetchSpy).toHaveBeenLastCalledWith(mockUrlList[2]);
           expect(wrapper.find(".flipCardFront").text()).toEqual(mockWordArray[2].word);
@@ -82,7 +82,7 @@ describe("<Main />", () => {
         wrapper.find("button#prevButton").simulate("click");
         setImmediate(() => {
           wrapper.update();
-          console.log(wrapper.debug());
+          //console.log(wrapper.debug());
           expect(fetchSpy).toHaveBeenCalledTimes(4);
           expect(fetchSpy).toHaveBeenLastCalledWith(mockUrlList[3]);
           expect(wrapper.find(".flipCardFront").text()).toEqual(mockWordArray[3].word);
@@ -95,7 +95,7 @@ describe("<Main />", () => {
         wrapper.find("button#prevButton").simulate("click");
         setImmediate(() => {
           wrapper.update();
-          console.log(wrapper.debug());
+          //console.log(wrapper.debug());
           expect(fetchSpy).toHaveBeenCalledTimes(5);
           expect(fetchSpy).toHaveBeenLastCalledWith(mockUrlList[4]);
           expect(wrapper.find(".flipCardFront").text()).toEqual(mockWordArray[4].word);
@@ -132,18 +132,48 @@ describe("<Main />", () => {
         setImmediate(() => {
           wrapper.update();
           //console.log(wrapper.debug());
+          expect(fetchSpy).toHaveBeenCalledTimes(1);
           expect(wrapper.find("#prevButton").exists()).toEqual(true);
           expect(wrapper.find("#mainGrid").exists()).toEqual(true);
           expect(wrapper.find("#loadingErrorMessage").exists()).toEqual(false);
           expect(wrapper.find("#nextButton").exists()).toEqual(true);
           wrapper.unmount();
+          jest.clearAllMocks();
           done();
         });
       });
-      jest.clearAllMocks();
     });
-  });
-  it.todo("loads previous WordCard when prevButton was clicked");
-  it.todo("displays error message when loads failed");
+    it("displays error message when loads failed", done => {
+      const mockUrlList = [
+        "http://localhost:3000/words/1",
+        "http://localhost:3000/words/2"
+      ];
+      let mockWordArray: WordResponse[] = [];
+      let mockFetchArray: MockFetch[] = [];
+      for (let i = 0; i < mockUrlList.length; i++) {
+        [mockWordArray[i], mockFetchArray[i]] = mockFactory(
+          "failed",
+          i,
+          mockUrlList[i]
+        );
+      }
+      window.fetch = jest.fn().
+        mockImplementationOnce(mockFetchArray[0]).
+        mockImplementationOnce(mockFetchArray[1]);
+      const fetchSpy = jest.spyOn(window, "fetch");
+      act(() => {
+        const wrapper = createMount()(<Main />);
+        setImmediate(() => {
+          wrapper.update();
+          expect(fetchSpy).toHaveBeenCalledTimes(1);
+          expect(wrapper.find("#loadingErrorMessage").text()).toEqual(
+            "Something went wrong ..."
+          );
+          jest.clearAllMocks();
+          done();
+        });
+      });
+    });
   it.todo("displays loading message during load");
+  });
 });
