@@ -8,6 +8,7 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import Button from "@material-ui/core/Button";
 // @ts-ignore
 import useWordApi from "../hooks/useWordApi.tsx";
+import userEnv from "userEnv";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,12 +44,13 @@ interface ReturnData {
 }
 
 function Main() {
-  let backendUrl: string;
-  if (process.env.NODE_ENV === "development") {
-    backendUrl = "http://127.0.0.1:3000/words/";
-  } else {
-    backendUrl = "https://localhost/lang/api/v1/words/";
-  }
+//  let backendUrl: string;
+//  if (process.env.NODE_ENV === "development") {
+//    backendUrl = "http://127.0.0.1:3000/words/";
+//  } else {
+//    backendUrl = "https://localhost/lang/api/v1/words/";
+//  }
+  const backendUrl = userEnv.apiUrl;
   const classes = useStyles();
   const [id, setId] = useState(1);
   const [{ word, isLoading, isError }, doFetch]: [

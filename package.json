@@ -13,8 +13,9 @@
     "test": "jest",
     "lint": "eslint .",
     "fix": "eslint --fix .",
-    "dev": "webpack-dev-server --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "dev": "NODE_ENV=dev webpack-dev-server --config webpack.dev.js",
+    "stg": "NODE_ENV=stg webpack --config webpack.prod.js",
+    "prd": "NODE_ENV=prd webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",

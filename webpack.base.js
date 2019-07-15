@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const environment = process.env.NODE_ENV || "dev";
 
 module.exports = {
   entry: path.resolve(__dirname, "./client/index.tsx"),
@@ -41,7 +42,8 @@ module.exports = {
   },
   resolve: {
     modules: [path.resolve(__dirname, "client"), "node_modules"],
-    extensions: [".js", ".jsx", ".ts", "tsx", ".json"]
+    extensions: [".js", ".jsx", ".ts", "tsx", ".json"],
+    alias: { userEnv$: path.resolve(__dirname, `.env/${environment}.ts`) }
   },
   output: {
     path: path.resolve("/www", "app", "lang", "words"),
