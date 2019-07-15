@@ -43,12 +43,18 @@ interface ReturnData {
 }
 
 function Main() {
+  let backendUrl: string;
+  if (process.env.NODE_ENV === "development") {
+    backendUrl = "http://127.0.0.1:3000/words/";
+  } else {
+    backendUrl = "https://localhost/lang/api/v1/words/";
+  }
   const classes = useStyles();
   const [id, setId] = useState(1);
   const [{ word, isLoading, isError }, doFetch]: [
     ReturnData,
     React.Dispatch<React.SetStateAction<string>>
-  ] = useWordApi("http://localhost:3000/words/1", {
+  ] = useWordApi(backendUrl + "1", {
     id: -1,
     word: "Initialize error",
     meaning: "Initialize error",
@@ -67,7 +73,7 @@ function Main() {
               setId(prevId);
               console.log(`id: ${id}`);
               console.log(`prevId: ${prevId}`);
-              doFetch(`http://localhost:3000/words/${encodeURIComponent(String(prevId))}`);
+              doFetch(`${backendUrl}${encodeURIComponent(String(prevId))}`);
             }
           }}
         >
@@ -87,7 +93,7 @@ function Main() {
             setId(nextId);
             console.log(`id: ${id}`);
             console.log(`nextId: ${nextId}`);
-            doFetch(`http://localhost:3000/words/${encodeURIComponent(String(nextId))}`);
+              doFetch(`${backendUrl}${encodeURIComponent(String(nextId))}`);
           }}
         >
           <ArrowForwardIcon />
