@@ -5,7 +5,7 @@ import Main from "../components/Main.tsx";
 import { createMount } from "@material-ui/core/test-utils";
 import { ReactWrapper } from "enzyme";
 // @ts-ignore
-import { mockFactory, MockFetch } from "../utils/mockFactory";
+import { mockFactory, MockFetch } from "./mockFactory.tsx";
 // @ts-ignore
 import { WordResponse } from "../hooks/useWordApi.tsx";
 // @ts-ignore

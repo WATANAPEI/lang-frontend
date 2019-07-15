@@ -5,7 +5,7 @@ import { shallow, mount, ReactWrapper } from "enzyme";
 import useWordApi, { WordResponse, ReturnData } from "../hooks/useWordApi.tsx";
 import "isomorphic-fetch";
 // @ts-ignore
-import { mockFactory, MockFetch } from "../utils/mockFactory.tsx";
+import { mockFactory, MockFetch } from "./mockFactory.tsx";
 
 interface UseWordApi {
   (initialUrl: string, initialWord: WordResponse): [
