@@ -5,13 +5,13 @@ services:
       container_name: "lang-frontend"
       volumes:
           - type: volume
-            source: public
-            target: /www/app
+            source: out
+            target: /www/app/lang-frontend
       networks:
           - mynet
 
 volumes:
-    public:
+    out:
         external: true
 
 networks:
