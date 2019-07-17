@@ -1,3 +1,4 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require("path");
 const webpack = require("webpack");
 const environment = process.env.NODE_ENV || "dev";
@@ -48,5 +49,8 @@ module.exports = {
   output: {
     path: path.resolve("/www", "app", "lang", "words"),
     filename: "bundle.js"
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({template: path.resolve(__dirname, './client/index.html')})
+  ]
 };
