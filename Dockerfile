@@ -5,7 +5,7 @@ RUN useradd --user-group --create-home --shell /bin/false app
 ENV HOME=/home/app
 WORKDIR $HOME/lang-frontend
 
-COPY package.json webpack* $HOME/lang-frontend/
+COPY package.json webpack* tsconfig.json $HOME/lang-frontend/
 
 RUN chown -R app:app $HOME/*
 
