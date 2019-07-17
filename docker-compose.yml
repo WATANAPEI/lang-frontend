@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+  p-build:
+      build: .
+      container_name: "lang-frontend"
+      volumes:
+          - type: volume
+            source: public
+            target: /www/app
+      networks:
+          - mynet
+
+volumes:
+    public:
+        external: true
+
+networks:
+    mynet:
+        external: true
