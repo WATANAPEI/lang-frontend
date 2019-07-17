@@ -6,12 +6,13 @@ ENV HOME=/home/app
 WORKDIR $HOME/lang-frontend
 
 COPY package.json webpack* tsconfig.json $HOME/lang-frontend/
+COPY client $HOME/lang-frontend/client
+COPY .env $HOME/lang-frontend/.env
 
 RUN chown -R app:app $HOME/*
 
 RUN npm install
 
-COPY client $HOME/lang-frontend/client
 #RUN yarn build
 #USER root
 # COPY . $HOME/p-drum
@@ -19,6 +20,6 @@ COPY client $HOME/lang-frontend/client
 #USER app
 
 #CMD ["tail", "-f", "/dev/null"]
-CMD ["npm", "run", "build"]
+CMD ["npm", "run", "prd"]
 
 
