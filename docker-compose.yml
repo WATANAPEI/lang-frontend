@@ -1,6 +1,6 @@
 version: "3.7"
 services:
-  p-build:
+  lang-frontend:
       build: .
       container_name: "lang-frontend"
       volumes:
