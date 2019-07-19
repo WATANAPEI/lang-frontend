@@ -3,6 +3,7 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,8 +27,16 @@ function SideBar({ text }: Props) {
   return (
     <Paper className={classes.sideBar}>
       <MenuList className={classes.li}>
-        <MenuItem>{text}1</MenuItem>
-        <MenuItem>{text}2</MenuItem>
+        <MenuItem>
+          <NavLink to="/lang/words/">
+            {text}1
+          </NavLink>
+        </MenuItem>
+        <MenuItem>
+          <NavLink to="/lang/words/wordlist">
+            {text}2
+          </NavLink>
+        </MenuItem>
       </MenuList>
     </Paper>
   );

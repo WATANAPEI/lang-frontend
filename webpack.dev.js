@@ -11,7 +11,8 @@ module.exports = merge(base, {
     contentBase: path.resolve("/www", "app", "lang", "words"),
     port: 8080,
     compress: true,
-    inline: true,
+    //inline: true,
+    publicPath: "/lang/words/",
     disableHostCheck: true,
     host: "0.0.0.0",
     https: {

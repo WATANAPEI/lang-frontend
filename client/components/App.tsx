@@ -37,8 +37,8 @@ function App() {
           <SideBar text="sidebar" />
         </Grid>
         <Grid item xs={9} className={classes.main}>
-          <Route exact path="/" component={Main} />
-          <Route path="/wordlist" component={WordList} />
+          <Route exact path="/lang/words/" component={Main} />
+          <Route path="/lang/words/wordlist" component={WordList} />
         </Grid>
       </Grid>
     </Router>
