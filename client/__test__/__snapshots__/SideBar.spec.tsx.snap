@@ -8,12 +8,18 @@ exports[`</SideBar /> has a MenuList and MenuItems 1`] = `
     className="makeStyles-li-2"
   >
     <WithStyles(ForwardRef(MenuItem))>
-      sideBar text
-      1
+      <NavLink
+        to="/lang/words/"
+      >
+        Word Card
+      </NavLink>
     </WithStyles(ForwardRef(MenuItem))>
     <WithStyles(ForwardRef(MenuItem))>
-      sideBar text
-      2
+      <NavLink
+        to="/lang/words/wordlist"
+      >
+        Word List
+      </NavLink>
     </WithStyles(ForwardRef(MenuItem))>
   </ForwardRef(MenuList)>
 </WithStyles(ForwardRef(Paper))>

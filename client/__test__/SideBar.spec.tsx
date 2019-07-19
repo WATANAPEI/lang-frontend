@@ -4,20 +4,19 @@ import { createShallow } from "@material-ui/core/test-utils";
 import SideBar from "../components/SideBar.tsx";
 import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
+import { NavLink } from "react-router-dom";
 
 describe("</SideBar />", () => {
   it("has a MenuList and MenuItems", () => {
-    const testText = "sideBar text";
-    const wrapper = createShallow()(<SideBar text={testText} />);
+    const wrapper = createShallow()(<SideBar />);
     expect(wrapper.find(MenuList)).toHaveLength(1);
     expect(wrapper.find(MenuItem).exists()).toEqual(true);
     expect(wrapper).toMatchSnapshot();
   });
-  it("render received texts", () => {
+  it("renders NavLink with text", () => {
     const testText = "sideBar text";
-    const wrapper = createShallow()(<SideBar text={testText} />);
+    const wrapper = createShallow()(<SideBar />);
 //    console.log(wrapper.text());
-    expect(wrapper.text()).toEqual(
-      expect.stringContaining(testText));
+    expect(wrapper.find(NavLink).exists()).toEqual(true);
   });
 });
