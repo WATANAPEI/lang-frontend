@@ -34,7 +34,7 @@ function App() {
           <HeaderBar text="Lang Project" />
         </Grid>
         <Grid item xs={3} className={classes.sideBar}>
-          <SideBar text="sidebar" />
+          <SideBar />
         </Grid>
         <Grid item xs={9} className={classes.main}>
           <Route exact path="/lang/words/" component={Main} />

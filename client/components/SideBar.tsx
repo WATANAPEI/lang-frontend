@@ -18,23 +18,19 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface Props {
-  text: string;
-}
-
-function SideBar({ text }: Props) {
+function SideBar() {
   const classes = useStyles();
   return (
     <Paper className={classes.sideBar}>
       <MenuList className={classes.li}>
         <MenuItem>
           <NavLink to="/lang/words/">
-            {text}1
+            Word Card
           </NavLink>
         </MenuItem>
         <MenuItem>
           <NavLink to="/lang/words/wordlist">
-            {text}2
+            Word List
           </NavLink>
         </MenuItem>
       </MenuList>
