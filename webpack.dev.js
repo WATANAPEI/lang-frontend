@@ -25,6 +25,7 @@ module.exports = merge(base, {
         path.resolve(__dirname, "client", "__test__"),
         path.resolve(__dirname, "client", "__mocks__")
       ]
-    }
+    },
+    historyApiFallback: true
   }
 });

@@ -7,6 +7,9 @@ import Main from "./Main.tsx";
 import SideBar from "./SideBar.tsx";
 import Grid from "@material-ui/core/Grid";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+// @ts-ignore
+import WordList from "./WordList.tsx";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,17 +28,20 @@ const useStyles = makeStyles((theme: Theme) =>
 function App() {
   const classes = useStyles();
   return (
-    <Grid container spacing={2} className={classes.headerBar}>
-      <Grid item xs={12}>
-        <HeaderBar text="Lang Project" />
+    <Router>
+      <Grid container spacing={2} className={classes.headerBar}>
+        <Grid item xs={12}>
+          <HeaderBar text="Lang Project" />
+        </Grid>
+        <Grid item xs={3} className={classes.sideBar}>
+          <SideBar text="sidebar" />
+        </Grid>
+        <Grid item xs={9} className={classes.main}>
+          <Route exact path="/" component={Main} />
+          <Route path="/wordlist" component={WordList} />
+        </Grid>
       </Grid>
-      <Grid item xs={3} className={classes.sideBar}>
-        <SideBar text="sidebar" />
-      </Grid>
-      <Grid item xs={9} className={classes.main}>
-        <Main />
-      </Grid>
-    </Grid>
+    </Router>
   );
 }
 
