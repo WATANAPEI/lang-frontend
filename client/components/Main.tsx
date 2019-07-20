@@ -8,7 +8,6 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import Button from "@material-ui/core/Button";
 // @ts-ignore
 import useWordApi from "../hooks/useWordApi.tsx";
-import userEnv from "userEnv";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,13 +43,13 @@ interface ReturnData {
 }
 
 function Main() {
-//  let backendUrl: string;
-//  if (process.env.NODE_ENV === "development") {
-//    backendUrl = "http://127.0.0.1:3000/words/";
-//  } else {
-//    backendUrl = "https://localhost/lang/api/v1/words/";
-//  }
-  const backendUrl = userEnv.apiUrl;
+  let backendUrl: string;
+  console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+  if (process.env.NODE_ENV === "production") {
+    backendUrl = "https://wpei.dev/lang/api/v1/words/";
+  } else {
+    backendUrl = "http://127.0.0.1:3000/words/";
+  }
   const classes = useStyles();
   const [id, setId] = useState(1);
   const [{ word, isLoading, isError }, doFetch]: [

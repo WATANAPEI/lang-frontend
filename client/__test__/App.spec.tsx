@@ -14,7 +14,10 @@ describe("<App />", () => {
     expect(wrapper.find("SideBar").text()).toBeTruthy();
   });
   it("has Main component", () => {
-    expect(wrapper.find("Main").exists()).toEqual(true);
+    expect(wrapper.find("#main").exists()).toEqual(true);
+  });
+  it("has WordList component", () => {
+    expect(wrapper.find("#wordList").exists()).toEqual(true);
   });
   it("renders properly", () => {
     expect(wrapper).toMatchSnapshot();

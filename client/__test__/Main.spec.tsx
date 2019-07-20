@@ -16,11 +16,11 @@ import toJson from "enzyme-to-json";
 describe("<Main />", () => {
   describe("this checks successive button clicks", () => {
     const mockUrlList = [
-      "http://localhost:3000/words/1",
-      "http://localhost:3000/words/2",
-      "http://localhost:3000/words/3",
-      "http://localhost:3000/words/2",
-      "http://localhost:3000/words/1"
+      "http://127.0.0.1:3000/words/1",
+      "http://127.0.0.1:3000/words/2",
+      "http://127.0.0.1:3000/words/3",
+      "http://127.0.0.1:3000/words/2",
+      "http://127.0.0.1:3000/words/1"
     ];
     let mockWordArray: WordResponse[] = [];
     let mockFetchArray: MockFetch[] = [];
@@ -113,9 +113,9 @@ describe("<Main />", () => {
   describe("temp", () => {
     it("has back button, WordCard, forward button after loads complete", done => {
       const mockUrlList = [
-        "http://localhost:3000/words/1",
-        "http://localhost:3000/words/2",
-        "http://localhost:3000/words/3"
+        "http://127.0.0.1:3000/words/1",
+        "http://127.0.0.1:3000/words/2",
+        "http://127.0.0.1:3000/words/3"
       ];
       let mockWordArray: WordResponse[] = [];
       let mockFetchArray: MockFetch[] = [];
@@ -149,8 +149,8 @@ describe("<Main />", () => {
     });
     it("displays error message when loads failed", done => {
       const mockUrlList = [
-        "http://localhost:3000/words/1",
-        "http://localhost:3000/words/2"
+        "http://127.0.0.1:3000/words/1",
+        "http://127.0.0.1:3000/words/2"
       ];
       let mockWordArray: WordResponse[] = [];
       let mockFetchArray: MockFetch[] = [];
@@ -181,7 +181,7 @@ describe("<Main />", () => {
     });
     it("doesn't move to the previous WordCard before the first one", done => {
       const mockUrlList = [
-        "http://localhost:3000/words/1"
+        "http://127.0.0.1:3000/words/1"
       ];
       const [mockWord, mockFetch]= mockFactory(
           "success",

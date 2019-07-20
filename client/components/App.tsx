@@ -31,14 +31,14 @@ function App() {
     <Router>
       <Grid container spacing={2} className={classes.headerBar}>
         <Grid item xs={12}>
-          <HeaderBar text="Lang Project" />
+          <HeaderBar id="headerBar" text="Lang Project" />
         </Grid>
         <Grid item xs={3} className={classes.sideBar}>
-          <SideBar />
+          <SideBar id="sideBar" />
         </Grid>
         <Grid item xs={9} className={classes.main}>
-          <Route exact path="/lang/words/" component={Main} />
-          <Route path="/lang/words/wordlist" component={WordList} />
+          <Route id="main" exact path="/lang/words/" component={Main} />
+          <Route id="wordList" path="/lang/words/wordlist" component={WordList} />
         </Grid>
       </Grid>
     </Router>
