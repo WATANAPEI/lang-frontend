@@ -30,11 +30,11 @@ function App() {
   return (
     <Router>
       <Grid container spacing={2} className={classes.headerBar}>
-        <Grid item xs={12}>
-          <HeaderBar id="headerBar" text="Lang Project" />
+        <Grid item id="headerBar" xs={12}>
+          <HeaderBar text="Lang Project" />
         </Grid>
-        <Grid item xs={3} className={classes.sideBar}>
-          <SideBar id="sideBar" />
+        <Grid item id="sideBar" xs={3} className={classes.sideBar}>
+          <SideBar />
         </Grid>
         <Grid item xs={9} className={classes.main}>
           <Route id="main" exact path="/lang/words/" component={Main} />
