@@ -8,6 +8,8 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import Button from "@material-ui/core/Button";
 // @ts-ignore
 import useWordApi from "../hooks/useWordApi.tsx";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,6 +24,13 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "space-between"
     },
     wordCardGrid: {
+      width: "100%",
+      height: "100%"
+    },
+    loadingMessage: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
       width: "100%",
       height: "100%"
     }
@@ -82,8 +91,22 @@ function Main() {
         </Button>
       </Grid>
       <Grid item xs={10} id="mainGrid" className={classes.wordCardGrid}>
-        {isError && <div id="loadingErrorMessage">Something went wrong ...</div>}
-        {isLoading ? <div id="loadingMessage">Loading...</div> : <WordCard {...word} />}
+        {isError && (
+          <Container
+            id="loadingErrorMessage"
+            className={classes.loadingMessage}
+          >
+            Something went wrong ...
+          </Container>
+        )}
+        {!isError &&
+          (isLoading ? (
+            <Container id="loadingMessage" className={classes.loadingMessage}>
+              <CircularProgress />
+            </Container>
+          ) : (
+            <WordCard {...word} />
+          ))}
       </Grid>
       <Grid item xs={1} className={classes.navCard}>
         <Button

@@ -2,9 +2,10 @@ import React from "react";
 // @ts-ignore
 import useWordsApi from "../hooks/useWordsApi.tsx";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import GridList from "@material-ui/core/GridList";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Container from "@material-ui/core/Container";
 
 interface WordResponse {
   id: number;
@@ -22,17 +23,18 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     wordListContainer: {
       display: "flex",
-//      flexDirection: "column",
       flexWrap: "wrap",
-//      justifyContent: "space-around",
       overflow: "auto",
-      height: "100%",
-//      width: "100%"
+      height: "100%"
     },
     paper: {
       padding: theme.spacing(2),
-      margin: "auto",
-//      maxWidth: 300
+      margin: "auto"
+    },
+    loadingMessage: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center"
     }
   })
 );
@@ -73,11 +75,21 @@ function WordList() {
       </Grid>
     </Paper>
   );
-
   return (
     <div className={classes.wordListContainer}>
-      {isError && <div id="loadingErrorMessage">Something went wrong...</div>}
-      {isLoading ? <div id="loadingMessage">Loading...</div> : wordLists}
+      {isError && (
+        <Container id="loadingErrorMessage" className={classes.loadingMessage}>
+          Something went wrong...
+        </Container>
+      )}
+      {!isError &&
+        (isLoading ? (
+          <Container id="loadingMessage" className={classes.loadingMessage}>
+            <CircularProgress />
+          </Container>
+        ) : (
+          wordLists
+        ))}
     </div>
   );
 }
