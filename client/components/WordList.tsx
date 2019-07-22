@@ -56,13 +56,6 @@ function WordList() {
     }
   ]);
   const classes = useStyles();
-
-  const wordListItems = words.map((word: WordResponse) =>
-    <li key={word.id.toString()} className={classes.wordList}>
-      {word.id} | {word.word} | {word.meaning}
-    </li>
-  );
-  
   const wordLists = words.map((word: WordResponse) =>
     <Paper key={word.id.toString()} className={classes.paper}>
       <Grid container direction="row" spacing={2}>
@@ -83,7 +76,8 @@ function WordList() {
 
   return (
     <div className={classes.wordListContainer}>
-      {wordLists}
+      {isError && <div id="loadingErrorMessage">Something went wrong...</div>}
+      {isLoading ? <div id="loadingMessage">Loading...</div> : wordLists}
     </div>
   );
 }
