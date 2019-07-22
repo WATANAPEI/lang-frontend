@@ -43,7 +43,7 @@ describe("<Main />", () => {
       act(() => {
         wrapper = createMount()(<Main />);
         setImmediate(() => {
-          expect(wrapper.find("div#loadingMessage").text()).toEqual("Loading...");
+          expect(wrapper.find("#loadingMessage").exists()).toBe(true);
           expect(wrapper).toMatchSnapshot();
           wrapper.update();
           //console.log(wrapper.debug());
@@ -169,9 +169,10 @@ describe("<Main />", () => {
         const wrapper = createMount()(<Main />);
         setImmediate(() => {
           wrapper.update();
+          //console.log(wrapper.debug());
           expect(wrapper).toMatchSnapshot();
           expect(fetchSpy).toHaveBeenCalledTimes(1);
-          expect(wrapper.find("#loadingErrorMessage").text()).toEqual(
+          expect(wrapper.find("div#loadingErrorMessage").text()).toEqual(
             "Something went wrong ..."
           );
           jest.clearAllMocks();
@@ -196,7 +197,6 @@ describe("<Main />", () => {
         setImmediate(() => {
           wrapper.update();
           const prevSnapshot = toJson(wrapper, {noKey: false, mode: "deep"});
-          //console.log(prevSnapshot);
           wrapper.find("button#prevButton").simulate("click");
           expect(toJson(wrapper, {noKey: false, mode: "deep"})).toEqual(prevSnapshot);
           wrapper.unmount();

@@ -3,12 +3,12 @@
 exports[`<Main /> temp displays error message when loads failed 1`] = `
 <Main>
   <WithStyles(ForwardRef(Grid))
-    className="makeStyles-mainContainer-291"
+    className="makeStyles-mainContainer-407"
     container={true}
     spacing={2}
   >
     <ForwardRef(Grid)
-      className="makeStyles-mainContainer-291"
+      className="makeStyles-mainContainer-407"
       classes={
         Object {
           "align-content-xs-center": "MuiGrid-align-content-xs-center",
@@ -120,15 +120,15 @@ exports[`<Main /> temp displays error message when loads failed 1`] = `
       spacing={2}
     >
       <div
-        className="MuiGrid-root makeStyles-mainContainer-291 MuiGrid-container MuiGrid-spacing-xs-2"
+        className="MuiGrid-root makeStyles-mainContainer-407 MuiGrid-container MuiGrid-spacing-xs-2"
       >
         <WithStyles(ForwardRef(Grid))
-          className="makeStyles-navCard-292"
+          className="makeStyles-navCard-408"
           item={true}
           xs={1}
         >
           <ForwardRef(Grid)
-            className="makeStyles-navCard-292"
+            className="makeStyles-navCard-408"
             classes={
               Object {
                 "align-content-xs-center": "MuiGrid-align-content-xs-center",
@@ -240,7 +240,7 @@ exports[`<Main /> temp displays error message when loads failed 1`] = `
             xs={1}
           >
             <div
-              className="MuiGrid-root makeStyles-navCard-292 MuiGrid-item MuiGrid-grid-xs-1"
+              className="MuiGrid-root makeStyles-navCard-408 MuiGrid-item MuiGrid-grid-xs-1"
             >
               <WithStyles(ForwardRef(Button))
                 data-prev={1}
@@ -397,13 +397,13 @@ exports[`<Main /> temp displays error message when loads failed 1`] = `
           </ForwardRef(Grid)>
         </WithStyles(ForwardRef(Grid))>
         <WithStyles(ForwardRef(Grid))
-          className="makeStyles-wordCardGrid-293"
+          className="makeStyles-wordCardGrid-409"
           id="mainGrid"
           item={true}
           xs={10}
         >
           <ForwardRef(Grid)
-            className="makeStyles-wordCardGrid-293"
+            className="makeStyles-wordCardGrid-409"
             classes={
               Object {
                 "align-content-xs-center": "MuiGrid-align-content-xs-center",
@@ -516,52 +516,46 @@ exports[`<Main /> temp displays error message when loads failed 1`] = `
             xs={10}
           >
             <div
-              className="MuiGrid-root makeStyles-wordCardGrid-293 MuiGrid-item MuiGrid-grid-xs-10"
+              className="MuiGrid-root makeStyles-wordCardGrid-409 MuiGrid-item MuiGrid-grid-xs-10"
               id="mainGrid"
             >
-              <div
+              <WithStyles(ForwardRef(Container))
+                className="makeStyles-loadingMessage-410"
                 id="loadingErrorMessage"
               >
-                Something went wrong ...
-              </div>
-              <WordCard
-                id={-1}
-                meaning="Initialize error"
-                meaningLanguageID={-1}
-                word="Initialize error"
-                wordLanguageID={-1}
-              >
-                <div
-                  className="flipCard"
+                <ForwardRef(Container)
+                  className="makeStyles-loadingMessage-410"
+                  classes={
+                    Object {
+                      "fixed": "MuiContainer-fixed",
+                      "maxWidthLg": "MuiContainer-maxWidthLg",
+                      "maxWidthMd": "MuiContainer-maxWidthMd",
+                      "maxWidthSm": "MuiContainer-maxWidthSm",
+                      "maxWidthXl": "MuiContainer-maxWidthXl",
+                      "maxWidthXs": "MuiContainer-maxWidthXs",
+                      "root": "MuiContainer-root",
+                    }
+                  }
+                  id="loadingErrorMessage"
                 >
                   <div
-                    className="flipCardInner"
-                    id="flipCardInner"
-                    onClick={[Function]}
+                    className="MuiContainer-root makeStyles-loadingMessage-410 MuiContainer-maxWidthLg"
+                    id="loadingErrorMessage"
                   >
-                    <div
-                      className="flipCardFront"
-                    >
-                      Initialize error
-                    </div>
-                    <div
-                      className="flipCardBack"
-                    >
-                      Initialize error
-                    </div>
+                    Something went wrong ...
                   </div>
-                </div>
-              </WordCard>
+                </ForwardRef(Container)>
+              </WithStyles(ForwardRef(Container))>
             </div>
           </ForwardRef(Grid)>
         </WithStyles(ForwardRef(Grid))>
         <WithStyles(ForwardRef(Grid))
-          className="makeStyles-navCard-292"
+          className="makeStyles-navCard-408"
           item={true}
           xs={1}
         >
           <ForwardRef(Grid)
-            className="makeStyles-navCard-292"
+            className="makeStyles-navCard-408"
             classes={
               Object {
                 "align-content-xs-center": "MuiGrid-align-content-xs-center",
@@ -673,7 +667,7 @@ exports[`<Main /> temp displays error message when loads failed 1`] = `
             xs={1}
           >
             <div
-              className="MuiGrid-root makeStyles-navCard-292 MuiGrid-item MuiGrid-grid-xs-1"
+              className="MuiGrid-root makeStyles-navCard-408 MuiGrid-item MuiGrid-grid-xs-1"
             >
               <WithStyles(ForwardRef(Button))
                 data-next={1}
@@ -1354,11 +1348,76 @@ exports[`<Main /> this checks successive button clicks shows load message and mo
               className="MuiGrid-root makeStyles-wordCardGrid-3 MuiGrid-item MuiGrid-grid-xs-10"
               id="mainGrid"
             >
-              <div
+              <WithStyles(ForwardRef(Container))
+                className="makeStyles-loadingMessage-4"
                 id="loadingMessage"
               >
-                Loading...
-              </div>
+                <ForwardRef(Container)
+                  className="makeStyles-loadingMessage-4"
+                  classes={
+                    Object {
+                      "fixed": "MuiContainer-fixed",
+                      "maxWidthLg": "MuiContainer-maxWidthLg",
+                      "maxWidthMd": "MuiContainer-maxWidthMd",
+                      "maxWidthSm": "MuiContainer-maxWidthSm",
+                      "maxWidthXl": "MuiContainer-maxWidthXl",
+                      "maxWidthXs": "MuiContainer-maxWidthXs",
+                      "root": "MuiContainer-root",
+                    }
+                  }
+                  id="loadingMessage"
+                >
+                  <div
+                    className="MuiContainer-root makeStyles-loadingMessage-4 MuiContainer-maxWidthLg"
+                    id="loadingMessage"
+                  >
+                    <WithStyles(ForwardRef(CircularProgress))>
+                      <ForwardRef(CircularProgress)
+                        classes={
+                          Object {
+                            "circle": "MuiCircularProgress-circle",
+                            "circleDisableShrink": "MuiCircularProgress-circleDisableShrink",
+                            "circleIndeterminate": "MuiCircularProgress-circleIndeterminate",
+                            "circleStatic": "MuiCircularProgress-circleStatic",
+                            "colorPrimary": "MuiCircularProgress-colorPrimary",
+                            "colorSecondary": "MuiCircularProgress-colorSecondary",
+                            "indeterminate": "MuiCircularProgress-indeterminate",
+                            "root": "MuiCircularProgress-root",
+                            "static": "MuiCircularProgress-static",
+                            "svg": "MuiCircularProgress-svg",
+                          }
+                        }
+                      >
+                        <div
+                          className="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+                          role="progressbar"
+                          style={
+                            Object {
+                              "height": 40,
+                              "width": 40,
+                            }
+                          }
+                        >
+                          <svg
+                            className="MuiCircularProgress-svg"
+                            viewBox="22 22 44 44"
+                          >
+                            <circle
+                              className="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+                              cx={44}
+                              cy={44}
+                              fill="none"
+                              r={20.2}
+                              strokeWidth={3.6}
+                              style={Object {}}
+                            />
+                          </svg>
+                        </div>
+                      </ForwardRef(CircularProgress)>
+                    </WithStyles(ForwardRef(CircularProgress))>
+                  </div>
+                </ForwardRef(Container)>
+              </WithStyles(ForwardRef(Container))>
             </div>
           </ForwardRef(Grid)>
         </WithStyles(ForwardRef(Grid))>
