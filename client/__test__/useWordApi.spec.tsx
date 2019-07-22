@@ -5,7 +5,7 @@ import { shallow, mount, ReactWrapper } from "enzyme";
 import useWordApi, { WordResponse, ReturnData } from "../hooks/useWordApi.tsx";
 import "isomorphic-fetch";
 // @ts-ignore
-import { mockFactory, MockFetch } from "./mockFactory.tsx";
+import { mockWordFactory, MockFetch } from "./MockFactory.tsx";
 
 interface UseWordApi {
   (initialUrl: string, initialWord: WordResponse): [
@@ -19,7 +19,6 @@ let mockDoFetch: jest.Mock;
 function MockReactComponent(mockUrlList: string[]) {
   let i = 0;
   const initialUrl = mockUrlList[i];
-  console.log(`initialUrl: ${initialUrl}`);
   const [{ word, isLoading, isError }, doFetch]: [
     ReturnData,
     React.Dispatch<React.SetStateAction<string>>
@@ -87,7 +86,7 @@ describe("test hooks", () => {
     let mockWordArray: WordResponse[] = [];
     let mockFetchArray: MockFetch[] = [];
     for (let i = 0; i < mockUrlList.length; i++) {
-      [mockWordArray[i], mockFetchArray[i]] = mockFactory(
+      [mockWordArray[i], mockFetchArray[i]] = mockWordFactory(
         "success",
         i,
         mockUrlList[i]
@@ -123,7 +122,7 @@ describe("test hooks", () => {
     let mockWordArray: WordResponse[] = [];
     let mockFetchArray: MockFetch[] = [];
     for (let i = 0; i < mockUrlList.length; i++) {
-      [mockWordArray[i], mockFetchArray[i]] = mockFactory(
+      [mockWordArray[i], mockFetchArray[i]] = mockWordFactory(
         "failed",
         i,
         mockUrlList[i]

@@ -5,7 +5,7 @@ import Main from "../components/Main.tsx";
 import { createMount } from "@material-ui/core/test-utils";
 import { ReactWrapper } from "enzyme";
 // @ts-ignore
-import { mockFactory, MockFetch } from "./mockFactory.tsx";
+import { mockWordFactory, MockFetch } from "./MockFactory.tsx";
 // @ts-ignore
 import { WordResponse } from "../hooks/useWordApi.tsx";
 // @ts-ignore
@@ -25,7 +25,7 @@ describe("<Main />", () => {
     let mockWordArray: WordResponse[] = [];
     let mockFetchArray: MockFetch[] = [];
     for (let i = 0; i < mockUrlList.length; i++) {
-      [mockWordArray[i], mockFetchArray[i]] = mockFactory(
+      [mockWordArray[i], mockFetchArray[i]] = mockWordFactory(
         "success",
         i,
         mockUrlList[i]
@@ -120,7 +120,7 @@ describe("<Main />", () => {
       let mockWordArray: WordResponse[] = [];
       let mockFetchArray: MockFetch[] = [];
       for (let i = 0; i < mockUrlList.length; i++) {
-        [mockWordArray[i], mockFetchArray[i]] = mockFactory(
+        [mockWordArray[i], mockFetchArray[i]] = mockWordFactory(
           "success",
           i,
           mockUrlList[i]
@@ -155,7 +155,7 @@ describe("<Main />", () => {
       let mockWordArray: WordResponse[] = [];
       let mockFetchArray: MockFetch[] = [];
       for (let i = 0; i < mockUrlList.length; i++) {
-        [mockWordArray[i], mockFetchArray[i]] = mockFactory(
+        [mockWordArray[i], mockFetchArray[i]] = mockWordFactory(
           "failed",
           i,
           mockUrlList[i]
@@ -183,7 +183,7 @@ describe("<Main />", () => {
       const mockUrlList = [
         "http://127.0.0.1:3000/words/1"
       ];
-      const [mockWord, mockFetch]= mockFactory(
+      const [mockWord, mockFetch]= mockWordFactory(
           "success",
           0,
           mockUrlList[0]

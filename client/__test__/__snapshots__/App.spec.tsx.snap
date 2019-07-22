@@ -8,22 +8,21 @@ exports[`<App /> renders properly 1`] = `
     spacing={2}
   >
     <WithStyles(ForwardRef(Grid))
+      id="headerBar"
       item={true}
       xs={12}
     >
       <HeaderBar
-        id="headerBar"
         text="Lang Project"
       />
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
       className="makeStyles-sideBar-2"
+      id="sideBar"
       item={true}
       xs={3}
     >
-      <SideBar
-        id="sideBar"
-      />
+      <SideBar />
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
       className="makeStyles-main-3"
