@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     li: {
       listStyle: "none"
+    },
+    navLink: {
+      width: "100%",
+      textDecorationLine: "none"
     }
   })
 );
@@ -24,12 +28,12 @@ function SideBar() {
     <Paper className={classes.sideBar}>
       <MenuList className={classes.li}>
         <MenuItem>
-          <NavLink to="/lang/words/">
+          <NavLink to="/lang/words/" className={classes.navLink}>
             Word Card
           </NavLink>
         </MenuItem>
         <MenuItem>
-          <NavLink to="/lang/words/wordlist">
+          <NavLink to="/lang/words/wordlist" className={classes.navLink}>
             Word List
           </NavLink>
         </MenuItem>
