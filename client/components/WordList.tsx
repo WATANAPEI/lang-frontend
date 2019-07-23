@@ -59,16 +59,20 @@ function WordList() {
   ]);
   const classes = useStyles();
   const wordLists = words.map((word: WordResponse) =>
-    <Paper key={word.id.toString()} className={classes.paper}>
+    <Paper
+      id={word.id.toString()}
+      key={word.id.toString()}
+      className={classes.paper}
+    >
       <Grid container direction="row" spacing={2}>
         <Grid item>
-          <h1>{word.id}</h1>
+          <h1 className="word_id">{word.id}</h1>
         </Grid>
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
-              <h3>{word.word}</h3>
-              <h3>{word.meaning}</h3>
+              <h3 className="word_word">{word.word}</h3>
+              <h3 className="word_meaning">{word.meaning}</h3>
             </Grid>
           </Grid>
         </Grid>
@@ -88,7 +92,7 @@ function WordList() {
             <CircularProgress />
           </Container>
         ) : (
-          wordLists
+            wordLists
         ))}
     </div>
   );
