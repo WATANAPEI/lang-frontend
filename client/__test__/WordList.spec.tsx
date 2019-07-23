@@ -43,6 +43,36 @@ describe("<WordList />", () => {
         expect(wrapper.find(".word_meaning").exists()).toEqual(true);
         expect(fetchSpy).toHaveBeenCalledTimes(1);
         expect(fetchSpy).toHaveBeenLastCalledWith(mockUrlList[0]);
+        expect(wrapper).toMatchSnapshot();
+        wrapper.unmount();
+        done();
+      });
+    });
+  });
+  it("render error message when data loading failed", done => {
+    const mockUrlList = [
+        "http://127.0.0.1:3000/words"
+    ];
+    let mockWordsArray: WordResponse[][] = [];
+    let mockFetchArray: MockFetch[] = [];
+    for (let i = 0; i < mockUrlList.length; i++) {
+      [mockWordsArray[i], mockFetchArray[i]] = mockWordsFactory(
+        "failed",
+        i,
+        mockUrlList[i]
+      );
+    }
+    window.fetch = jest.fn().
+      mockImplementationOnce(mockFetchArray[0]);
+    const fetchSpy = jest.spyOn(window, "fetch");
+
+    act(() => {
+      const wrapper = createMount()(<WordList />);
+      setImmediate(() => {
+        wrapper.update();
+        //console.log(wrapper.debug());
+        expect(wrapper.find("#loadingErrorMessage").exists()).toEqual(true);
+        expect(wrapper).toMatchSnapshot();
         wrapper.unmount();
         done();
       });
