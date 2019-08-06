@@ -2,7 +2,7 @@ import React from "react";
 // @ts-ignore
 import HeaderBar from "./HeaderBar.tsx";
 // @ts-ignore
-import Main from "./Main.tsx";
+import MainContainer from "../container/MainContainer.tsx";
 // @ts-ignore
 import SideBar from "./SideBar.tsx";
 import Grid from "@material-ui/core/Grid";
@@ -37,7 +37,7 @@ function App() {
           <SideBar />
         </Grid>
         <Grid item xs={9} className={classes.main}>
-          <Route id="main" exact path="/lang/words/" component={Main} />
+          <Route id="main" exact path="/lang/words/" component={MainContainer} />
           <Route id="wordList" path="/lang/words/wordlist" component={WordList} />
         </Grid>
       </Grid>

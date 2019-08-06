@@ -10,7 +10,19 @@ export interface WordResponse {
   meaningLanguageID: number;
 }
 
-function WordCard(word: WordResponse) {
+export interface WordCardProps {
+  wordFront: string;
+  languageFront?: string;
+  wordBack: string;
+  languageBack?: string;
+}
+
+function WordCard({
+  wordFront,
+  languageFront,
+  wordBack,
+  languageBack
+}: WordCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
 
   function handleClick(event: React.MouseEvent<HTMLInputElement>) {
@@ -26,8 +38,8 @@ function WordCard(word: WordResponse) {
     <div className={styles.flipCard}>
       <div id="flipCardInner" className={styles.flipCardInner} onClick={handleClick}>
         <React.Fragment>
-          <div className={styles.flipCardFront}>{word.word}</div>
-          <div className={styles.flipCardBack}>{word.meaning}</div>
+          <div className={styles.flipCardFront}>{wordFront}</div>
+          <div className={styles.flipCardBack}>{wordBack}</div>
         </React.Fragment>
       </div>
     </div>
