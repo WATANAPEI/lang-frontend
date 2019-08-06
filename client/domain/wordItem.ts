@@ -19,7 +19,7 @@ export class WordItem {
       this.mark = mark;
     }
   }
-  public rightAnswer(): void {
+  public correctAnswer(): void {
     this.mark = true;
   }
   public wrongAnswer(): void {
