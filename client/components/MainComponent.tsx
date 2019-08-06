@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface MainComponentProps {
+export interface MainComponentProps {
   wordCardProps: WordCardProps;
   isLoading: boolean;
   isError: boolean;

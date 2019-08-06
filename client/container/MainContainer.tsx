@@ -2,7 +2,7 @@ import React, { useState } from "react";
 // @ts-ignore
 import useWordApi from "../hooks/useWordApi.tsx";
 // @ts-ignore
-import MainComponent from "../components/MainComponent.tsx";
+import MainComponent, { MainComponentProps } from "../components/MainComponent.tsx";
 
 interface WordResponse {
   id: number;
@@ -53,19 +53,18 @@ function MainContainer() {
     console.log(`nextId: ${nextId}`);
     doFetch(`${backendUrl}${encodeURIComponent(String(nextId))}`);
   };
-  let props = {
+  const props = {
     wordFront: word.word,
     wordBack: word.meaning
   };
-  return (
-    <MainComponent
-      wordCardProps={props}
-      isLoading={isLoading}
-      isError={isError}
-      next={next}
-      prev={prev}
-    />
-  );
+  const mainComponentProps: MainComponentProps = {
+    wordCardProps: props,
+    isLoading: isLoading,
+    isError: isError,
+    next: next,
+    prev: prev
+  };
+  return <MainComponent {...mainComponentProps} />;
 }
 
 export default MainContainer;
