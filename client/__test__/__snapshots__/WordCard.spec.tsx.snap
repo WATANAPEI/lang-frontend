@@ -2,11 +2,8 @@
 
 exports[`<WordCard /> has 4 divs with flipCard/flipCardInner/flipCardFront/flipCardBack class 1`] = `
 <WordCard
-  id={1}
-  meaning="test meaning"
-  meaningLanguageID={2}
-  word="test word"
-  wordLanguageID={1}
+  wordBack="word_written_in_back"
+  wordFront="word_written_in_front"
 >
   <div
     className="flipCard"
@@ -19,12 +16,12 @@ exports[`<WordCard /> has 4 divs with flipCard/flipCardInner/flipCardFront/flipC
       <div
         className="flipCardFront"
       >
-        test word
+        word_written_in_front
       </div>
       <div
         className="flipCardBack"
       >
-        test meaning
+        word_written_in_back
       </div>
     </div>
   </div>
