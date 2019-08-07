@@ -17,6 +17,14 @@ import toJson from "enzyme-to-json";
 
 describe("<MainContainer />", () => {
   describe("MainContainer passes arguments to MainComponent", () => {
+    const backendUrl = "http://127.0.0.1:3000/words/";
+    const initialWord = {
+      id: -1,
+      word: "Initialize error",
+      meaning: "Initialize error",
+      wordLanguageID: -1,
+      meaningLanguageID: -1
+    };
     const mockUrlList = [
       "http://127.0.0.1:3000/words/1",
       "http://127.0.0.1:3000/words/2",
@@ -41,7 +49,7 @@ describe("<MainContainer />", () => {
     let wrapper: ReactWrapper;
     it("passes wordFront and wordBack to MainComponent", done => {
       act(() => {
-        wrapper = mount(<MainContainer />);
+        wrapper = mount(<MainContainer backendUrl={backendUrl} initialWord={initialWord} />);
         const outProps: MainComponentProps = wrapper.find(MainComponent).props();
         expect(outProps.isLoading).toBe(true);
         expect(outProps.isError).toBe(false);

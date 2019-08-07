@@ -1,16 +1,8 @@
 import React, { useState } from "react";
 // @ts-ignore
-import useWordApi from "../hooks/useWordApi.tsx";
+import useWordApi, { WordResponse } from "../hooks/useWordApi.tsx";
 // @ts-ignore
 import MainComponent, { MainComponentProps } from "../components/MainComponent.tsx";
-
-interface WordResponse {
-  id: number;
-  word: string;
-  meaning: string;
-  wordLanguageID: number;
-  meaningLanguageID: number;
-}
 
 interface ReturnData {
   word: WordResponse;
@@ -18,7 +10,7 @@ interface ReturnData {
   isError: boolean;
 }
 
-function MainContainer(backendUrl: string, initialWord: WordResponse) {
+function MainContainer({ backendUrl }: { backendUrl: string }, initialWord: WordResponse) {
   const [id, setId] = useState(1);
   const [{ word, isLoading, isError }, doFetch]: [
     ReturnData,

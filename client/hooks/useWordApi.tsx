@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+//@ts-ignore
+import { translateToWordResponse } from "./wordTranslator.ts";
 
 export interface WordResponse {
   id: number;
@@ -49,7 +51,6 @@ const useWordApi: UseWordApi = (initialUrl, initialWord) => {
     const fetchData = async () => {
       setIsError(false);
       setIsLoading(true);
-
       try {
         const response = await fetch(url);
         console.log(`reponse: ${JSON.stringify(response)}`);
@@ -57,17 +58,7 @@ const useWordApi: UseWordApi = (initialUrl, initialWord) => {
         console.log(`json: ${JSON.stringify(json)}`);
         const data: RawData = json.data;
         console.log(`data: ${JSON.stringify(data)}`);
-        const word: WordResponse =
-        {
-          id: data.id,
-          word: data.word,
-          meaning: data.meaning,
-          wordLanguageID: data.word_lang_id,
-          meaningLanguageID: data.meaning_lang_id
-        };
-//      console.log(`json: ${JSON.stringify(word)}`);
-//      console.log(`data: ${data}`);
-//      console.log(`word: ${word}`);
+        const word: WordResponse = translateToWordResponse(data);
         setWord(word);
       } catch (error) {
         setIsError(true);

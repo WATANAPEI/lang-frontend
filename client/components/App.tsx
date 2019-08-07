@@ -52,7 +52,7 @@ function App() {
           <SideBar />
         </Grid>
         <Grid item xs={9} className={classes.main}>
-          <Route id="main" exact path="/lang/words/" render={() => <MainContainer backendUrl={backendUrl} initialWord={initialWord} />} />
+          <Route id="main" exact path="/lang/words/" render={() => <MainContainer backendUrl={backendUrl} {...initialWord} />} />
           <Route id="wordList" path="/lang/words/wordlist" component={WordList} />
         </Grid>
       </Grid>
