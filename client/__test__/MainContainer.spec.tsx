@@ -1,9 +1,11 @@
 import React from "react";
 import { act } from "react-dom/test-utils";
 // @ts-ignore
-import Main from "../components/Main.tsx";
+import MainContainer from "../container/MainContainer.tsx";
+// @ts-ignore
+import MainComponent, { MainComponentProps } from "../components/MainComponent.tsx";
 import { createMount } from "@material-ui/core/test-utils";
-import { ReactWrapper } from "enzyme";
+import { shallow, mount, ReactWrapper } from "enzyme";
 // @ts-ignore
 import { mockWordFactory, MockFetch } from "./MockFactory.tsx";
 // @ts-ignore
@@ -13,12 +15,10 @@ import WordCard from "../components/WordCard.tsx";
 import "isomorphic-fetch";
 import toJson from "enzyme-to-json";
 
-describe("<Main />", () => {
-  describe("this checks successive button clicks", () => {
+describe("<MainContainer />", () => {
+  describe("MainContainer passes arguments to MainComponent", () => {
     const mockUrlList = [
       "http://127.0.0.1:3000/words/1",
-      "http://127.0.0.1:3000/words/2",
-      "http://127.0.0.1:3000/words/3",
       "http://127.0.0.1:3000/words/2",
       "http://127.0.0.1:3000/words/1"
     ];
@@ -39,167 +39,78 @@ describe("<Main />", () => {
       mockImplementationOnce(mockFetchArray[4]);
     const fetchSpy = jest.spyOn(window, "fetch");
     let wrapper: ReactWrapper;
-    it("shows load message and mounts Main", done => {
+    it("passes wordFront and wordBack to MainComponent", done => {
       act(() => {
-        wrapper = createMount()(<Main />);
+        wrapper = mount(<MainContainer />);
+        const outProps: MainComponentProps = wrapper.find(MainComponent).props();
+        expect(outProps.isLoading).toBe(true);
+        expect(outProps.isError).toBe(false);
+        console.log(outProps);
         setImmediate(() => {
-          expect(wrapper.find("#loadingMessage").exists()).toBe(true);
-          expect(wrapper).toMatchSnapshot();
           wrapper.update();
-          //console.log(wrapper.debug());
-          expect(wrapper).toMatchSnapshot();
-          expect(fetchSpy).toHaveBeenCalledTimes(1);
-          expect(fetchSpy).toHaveBeenLastCalledWith(mockUrlList[0]);
-          expect(wrapper.find(".flipCardFront").text()).toEqual(mockWordArray[0].word);
+          const outProps: MainComponentProps = wrapper.find(MainComponent).props();
+          expect(outProps.isLoading).toBe(false);
+          expect(outProps.isError).toBe(false);
+          expect(outProps.wordCardProps.wordFront).toBe(mockWordArray[0].word);
+          expect(outProps.wordCardProps.wordBack).toBe(mockWordArray[0].meaning);
+          console.log(outProps);
           done();
         });
       });
     });
-    it("loads next WordCard when next button clicked", done => {
+    it("passes next function to MainComponent", done => {
+      const outProps: MainComponentProps = wrapper.find(MainComponent).props();
+      const next = outProps.next;
       act(() => {
-        wrapper.find("button#nextButton").simulate("click");
+        next();
         setImmediate(() => {
           wrapper.update();
-          //console.log(wrapper.debug());
+          const outProps: MainComponentProps = wrapper.find(MainComponent).props();
+          expect(outProps.isLoading).toBe(false);
+          expect(outProps.isError).toBe(false);
           expect(fetchSpy).toHaveBeenCalledTimes(2);
           expect(fetchSpy).toHaveBeenLastCalledWith(mockUrlList[1]);
-          expect(wrapper.find(".flipCardFront").text()).toEqual(mockWordArray[1].word);
+          expect(outProps.wordCardProps.wordFront).toBe(mockWordArray[1].word);
+          expect(outProps.wordCardProps.wordBack).toBe(mockWordArray[1].meaning);
+          console.log(outProps);
           done();
         });
       });
     });
-    it("loads next WordCard by clicking again", done => {
+    it("passes prev function to MainComponent", done => {
+      const outProps: MainComponentProps = wrapper.find(MainComponent).props();
+      const prev = outProps.prev;
       act(() => {
-        wrapper.find("button#nextButton").simulate("click");
+        prev();
         setImmediate(() => {
           wrapper.update();
-          //console.log(wrapper.debug());
+          const outProps: MainComponentProps = wrapper.find(MainComponent).props();
+          expect(outProps.isLoading).toBe(false);
+          expect(outProps.isError).toBe(false);
           expect(fetchSpy).toHaveBeenCalledTimes(3);
           expect(fetchSpy).toHaveBeenLastCalledWith(mockUrlList[2]);
-          expect(wrapper.find(".flipCardFront").text()).toEqual(mockWordArray[2].word);
+          expect(outProps.wordCardProps.wordFront).toBe(mockWordArray[2].word);
+          expect(outProps.wordCardProps.wordBack).toBe(mockWordArray[2].meaning);
+          console.log(outProps);
           done();
         });
       });
     });
-    it("loads previous WordCard when prevButton clicked", done => {
+    it("does not respond to the prev button click on the first word", done => {
+      const outProps: MainComponentProps = wrapper.find(MainComponent).props();
+      const prev = outProps.prev;
       act(() => {
-        wrapper.find("button#prevButton").simulate("click");
+        prev();
         setImmediate(() => {
           wrapper.update();
-          //console.log(wrapper.debug());
-          expect(fetchSpy).toHaveBeenCalledTimes(4);
-          expect(fetchSpy).toHaveBeenLastCalledWith(mockUrlList[3]);
-          expect(wrapper.find(".flipCardFront").text()).toEqual(mockWordArray[3].word);
-          done();
-        });
-      });
-    });
-    it("loads previous WordCard by clicking prevButton agin", done => {
-      act(() => {
-        wrapper.find("button#prevButton").simulate("click");
-        setImmediate(() => {
-          wrapper.update();
-          //console.log(wrapper.debug());
-          expect(fetchSpy).toHaveBeenCalledTimes(5);
-          expect(fetchSpy).toHaveBeenLastCalledWith(mockUrlList[4]);
-          expect(wrapper.find(".flipCardFront").text()).toEqual(mockWordArray[4].word);
-          wrapper.unmount();
-          jest.clearAllMocks();
-          done();
-        });
-      });
-    });
-  });
-  describe("temp", () => {
-    it("has back button, WordCard, forward button after loads complete", done => {
-      const mockUrlList = [
-        "http://127.0.0.1:3000/words/1",
-        "http://127.0.0.1:3000/words/2",
-        "http://127.0.0.1:3000/words/3"
-      ];
-      let mockWordArray: WordResponse[] = [];
-      let mockFetchArray: MockFetch[] = [];
-      for (let i = 0; i < mockUrlList.length; i++) {
-        [mockWordArray[i], mockFetchArray[i]] = mockWordFactory(
-          "success",
-          i,
-          mockUrlList[i]
-        );
-      }
-      window.fetch = jest.fn().
-        mockImplementationOnce(mockFetchArray[0]).
-        mockImplementationOnce(mockFetchArray[1]).
-        mockImplementationOnce(mockFetchArray[2]);
-      const fetchSpy = jest.spyOn(window, "fetch");
-      act(() => {
-        const wrapper = createMount()(<Main />);
-        setImmediate(() => {
-          wrapper.update();
-          //console.log(wrapper.debug());
-          expect(fetchSpy).toHaveBeenCalledTimes(1);
-          expect(wrapper.find("#prevButton").exists()).toEqual(true);
-          expect(wrapper.find("#mainGrid").exists()).toEqual(true);
-          expect(wrapper.find("#loadingErrorMessage").exists()).toEqual(false);
-          expect(wrapper.find("#nextButton").exists()).toEqual(true);
-          wrapper.unmount();
-          jest.clearAllMocks();
-          done();
-        });
-      });
-    });
-    it("displays error message when loads failed", done => {
-      const mockUrlList = [
-        "http://127.0.0.1:3000/words/1",
-        "http://127.0.0.1:3000/words/2"
-      ];
-      let mockWordArray: WordResponse[] = [];
-      let mockFetchArray: MockFetch[] = [];
-      for (let i = 0; i < mockUrlList.length; i++) {
-        [mockWordArray[i], mockFetchArray[i]] = mockWordFactory(
-          "failed",
-          i,
-          mockUrlList[i]
-        );
-      }
-      window.fetch = jest.fn().
-        mockImplementationOnce(mockFetchArray[0]).
-        mockImplementationOnce(mockFetchArray[1]);
-      const fetchSpy = jest.spyOn(window, "fetch");
-      act(() => {
-        const wrapper = createMount()(<Main />);
-        setImmediate(() => {
-          wrapper.update();
-          //console.log(wrapper.debug());
-          expect(wrapper).toMatchSnapshot();
-          expect(fetchSpy).toHaveBeenCalledTimes(1);
-          expect(wrapper.find("div#loadingErrorMessage").text()).toEqual(
-            "Something went wrong ..."
-          );
-          jest.clearAllMocks();
-          done();
-        });
-      });
-    });
-    it("doesn't move to the previous WordCard before the first one", done => {
-      const mockUrlList = [
-        "http://127.0.0.1:3000/words/1"
-      ];
-      const [mockWord, mockFetch]= mockWordFactory(
-          "success",
-          0,
-          mockUrlList[0]
-        );
-      window.fetch = jest.fn().
-        mockImplementationOnce(mockFetch);
-      const fetchSpy = jest.spyOn(window, "fetch");
-      act(() => {
-        const wrapper = createMount()(<Main />);
-        setImmediate(() => {
-          wrapper.update();
-          const prevSnapshot = toJson(wrapper, {noKey: false, mode: "deep"});
-          wrapper.find("button#prevButton").simulate("click");
-          expect(toJson(wrapper, {noKey: false, mode: "deep"})).toEqual(prevSnapshot);
-          wrapper.unmount();
+          const outProps: MainComponentProps = wrapper.find(MainComponent).props();
+          expect(outProps.isLoading).toBe(false);
+          expect(outProps.isError).toBe(false);
+          expect(fetchSpy).toHaveBeenCalledTimes(3);
+          expect(fetchSpy).toHaveBeenLastCalledWith(mockUrlList[2]);
+          expect(outProps.wordCardProps.wordFront).toBe(mockWordArray[2].word);
+          expect(outProps.wordCardProps.wordBack).toBe(mockWordArray[2].meaning);
+          console.log(outProps);
           done();
         });
       });

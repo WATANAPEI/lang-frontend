@@ -44,6 +44,7 @@ function MainContainer() {
       console.log(`id: ${id}`);
       console.log(`prevId: ${prevId}`);
       doFetch(`${backendUrl}${encodeURIComponent(String(prevId))}`);
+    } else {
     }
   };
   const next = (): void => {
