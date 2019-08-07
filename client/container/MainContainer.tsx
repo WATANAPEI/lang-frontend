@@ -18,25 +18,12 @@ interface ReturnData {
   isError: boolean;
 }
 
-function MainContainer() {
-  let backendUrl: string;
-  console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
-  if (process.env.NODE_ENV === "production") {
-    backendUrl = "https://wpei.dev/lang/api/v1/words/";
-  } else {
-    backendUrl = "http://127.0.0.1:3000/words/";
-  }
+function MainContainer(backendUrl: string, initialWord: WordResponse) {
   const [id, setId] = useState(1);
   const [{ word, isLoading, isError }, doFetch]: [
     ReturnData,
     React.Dispatch<React.SetStateAction<string>>
-  ] = useWordApi(backendUrl + "1", {
-    id: -1,
-    word: "Initialize error",
-    meaning: "Initialize error",
-    wordLanguageID: -1,
-    meaningLanguageID: -1
-  });
+  ] = useWordApi(backendUrl + "1", initialWord);
   const prev = (): void => {
     if (id > 1) {
       const prevId = id - 1;

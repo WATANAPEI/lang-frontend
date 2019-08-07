@@ -27,6 +27,21 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function App() {
   const classes = useStyles();
+  let backendUrl: string;
+  const initialWord = {
+    id: -1,
+    word: "Initialize error",
+    meaning: "Initialize error",
+    wordLanguageID: -1,
+    meaningLanguageID: -1
+  };
+
+  //console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+  if (process.env.NODE_ENV === "production") {
+    backendUrl = "https://wpei.dev/lang/api/v1/words/";
+  } else {
+    backendUrl = "http://127.0.0.1:3000/words/";
+  }
   return (
     <Router>
       <Grid container spacing={2} className={classes.headerBar}>
@@ -37,7 +52,7 @@ function App() {
           <SideBar />
         </Grid>
         <Grid item xs={9} className={classes.main}>
-          <Route id="main" exact path="/lang/words/" component={MainContainer} />
+          <Route id="main" exact path="/lang/words/" render={() => <MainContainer backendUrl={backendUrl} initialWord={initialWord} />} />
           <Route id="wordList" path="/lang/words/wordlist" component={WordList} />
         </Grid>
       </Grid>

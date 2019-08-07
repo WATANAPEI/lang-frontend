@@ -30,10 +30,10 @@ exports[`<App /> renders properly 1`] = `
       xs={9}
     >
       <Route
-        component={[Function]}
         exact={true}
         id="main"
         path="/lang/words/"
+        render={[Function]}
       />
       <Route
         component={[Function]}
