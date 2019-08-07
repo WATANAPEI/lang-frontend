@@ -60,6 +60,21 @@ describe("<MainComponent />", () => {
       expect(wrapper.find(WordCard).prop("wordFront")).toBe(props.wordFront);
       expect(wrapper.find(WordCard).prop("wordBack")).toBe(props.wordBack);
     });
-    it.todo("stimulates argument functions");
+    it("stimulates argument functions when buttons clicked", () => {
+      const isNotLoading = false;
+      const isNotError = false;
+      const mainComponentProps: MainComponentProps = {
+        wordCardProps: props,
+        isLoading: isNotLoading,
+        isError: isNotError,
+        next: next,
+        prev: prev
+      };
+      const wrapper = createShallow()(<MainComponent {...mainComponentProps} />);
+      wrapper.find("#prevButton").simulate("click");
+      wrapper.find("#nextButton").simulate("click");
+      expect(prev).toHaveBeenCalledTimes(1);
+      expect(next).toHaveBeenCalledTimes(1);
+    });
   });
 });
