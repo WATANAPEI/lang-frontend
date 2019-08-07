@@ -20,10 +20,10 @@ export class WordItem {
     }
   }
   public correctAnswer(): void {
-    this.mark = true;
+    this.setMark(true);
   }
   public wrongAnswer(): void {
-    this.mark = false;
+    this.setMark(false);
   }
   public meansIn(language: string): string | null {
     for (let word of this.wordContent) {
