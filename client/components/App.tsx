@@ -9,7 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 // @ts-ignore
-import WordList from "./WordList.tsx";
+import WordListContainer from "../container/WordListContainer.tsx";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -53,7 +53,7 @@ function App() {
         </Grid>
         <Grid item xs={9} className={classes.main}>
           <Route id="main" exact path="/lang/words/" render={() => <MainContainer backendUrl={backendUrl} {...initialWord} />} />
-          <Route id="wordList" path="/lang/words/wordlist" component={WordList} />
+          <Route id="wordList" path="/lang/words/wordlist" render={() => <MainContainer backendUrl={backendUrl} {...initialWord} />} />
         </Grid>
       </Grid>
     </Router>
