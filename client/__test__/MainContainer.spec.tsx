@@ -30,7 +30,7 @@ describe("<MainContainer />", () => {
       "http://127.0.0.1:3000/words/2",
       "http://127.0.0.1:3000/words/1"
     ];
-    let mockWordArray: WordResponse[] = [];
+    let mockWordArray: WordResponse[][] = [];
     let mockFetchArray: MockFetch[] = [];
     for (let i = 0; i < mockUrlList.length; i++) {
       [mockWordArray[i], mockFetchArray[i]] = mockWordFactory(
@@ -59,8 +59,8 @@ describe("<MainContainer />", () => {
           const outProps: MainComponentProps = wrapper.find(MainComponent).props();
           expect(outProps.isLoading).toBe(false);
           expect(outProps.isError).toBe(false);
-          expect(outProps.wordCardProps.wordFront).toBe(mockWordArray[0].word);
-          expect(outProps.wordCardProps.wordBack).toBe(mockWordArray[0].meaning);
+          expect(outProps.wordCardProps.wordFront).toBe(mockWordArray[0][0].word);
+          expect(outProps.wordCardProps.wordBack).toBe(mockWordArray[0][0].meaning);
           console.log(outProps);
           done();
         });
@@ -78,8 +78,8 @@ describe("<MainContainer />", () => {
           expect(outProps.isError).toBe(false);
           expect(fetchSpy).toHaveBeenCalledTimes(2);
           expect(fetchSpy).toHaveBeenLastCalledWith(mockUrlList[1]);
-          expect(outProps.wordCardProps.wordFront).toBe(mockWordArray[1].word);
-          expect(outProps.wordCardProps.wordBack).toBe(mockWordArray[1].meaning);
+          expect(outProps.wordCardProps.wordFront).toBe(mockWordArray[1][0].word);
+          expect(outProps.wordCardProps.wordBack).toBe(mockWordArray[1][0].meaning);
           console.log(outProps);
           done();
         });
@@ -97,8 +97,8 @@ describe("<MainContainer />", () => {
           expect(outProps.isError).toBe(false);
           expect(fetchSpy).toHaveBeenCalledTimes(3);
           expect(fetchSpy).toHaveBeenLastCalledWith(mockUrlList[2]);
-          expect(outProps.wordCardProps.wordFront).toBe(mockWordArray[2].word);
-          expect(outProps.wordCardProps.wordBack).toBe(mockWordArray[2].meaning);
+          expect(outProps.wordCardProps.wordFront).toBe(mockWordArray[2][0].word);
+          expect(outProps.wordCardProps.wordBack).toBe(mockWordArray[2][0].meaning);
           console.log(outProps);
           done();
         });
@@ -116,8 +116,8 @@ describe("<MainContainer />", () => {
           expect(outProps.isError).toBe(false);
           expect(fetchSpy).toHaveBeenCalledTimes(3);
           expect(fetchSpy).toHaveBeenLastCalledWith(mockUrlList[2]);
-          expect(outProps.wordCardProps.wordFront).toBe(mockWordArray[2].word);
-          expect(outProps.wordCardProps.wordBack).toBe(mockWordArray[2].meaning);
+          expect(outProps.wordCardProps.wordFront).toBe(mockWordArray[2][0].word);
+          expect(outProps.wordCardProps.wordBack).toBe(mockWordArray[2][0].meaning);
           console.log(outProps);
           done();
         });

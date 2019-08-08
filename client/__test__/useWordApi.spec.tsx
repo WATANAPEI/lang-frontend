@@ -83,7 +83,7 @@ describe("test hooks", () => {
       "http://dummy.com/2",
       "http://dummy.com/3"
     ];
-    let mockWordArray: WordResponse[] = [];
+    let mockWordArray: WordResponse[][] = [];
     let mockFetchArray: MockFetch[] = [];
     for (let i = 0; i < mockUrlList.length; i++) {
       [mockWordArray[i], mockFetchArray[i]] = mockWordFactory(
@@ -102,8 +102,9 @@ describe("test hooks", () => {
       setImmediate(() => {
         wrapper.update();
         console.log(wrapper.debug());
+        console.log(mockWordArray[0][0]);
         expect(fetchSpy).toHaveBeenCalledTimes(1);
-        wordResponseCheck(mockWordArray[0], wrapper);
+        wordResponseCheck(mockWordArray[0][0], wrapper);
         wrapper.find("#doFetch").simulate("click");
         wrapper.update();
         expect(mockDoFetch).toHaveBeenCalledWith(mockUrlList[1]);

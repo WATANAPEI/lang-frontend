@@ -16,7 +16,6 @@ export interface ReturnData {
   isError: boolean;
 }
 
-
 interface UseWordApi {
   (initialUrl: string, initialWord: WordResponse): [
     ReturnData,
