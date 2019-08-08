@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 //@ts-ignore
-import { translateToWordsResponse } from "../hooks/wordTranslator.ts";
+import { translateToWordsResponse } from "./wordTranslator.ts";
 
 export interface WordResponse {
   id: number;
@@ -54,6 +54,7 @@ const useWordsApi: UseWordsApi = (initialUrl, initialWord) => {
 
       try {
         const response = await fetch(url);
+        console.log(`reponse: ${JSON.stringify(response)}`);
         const words: WordResponse[] = await translateToWordsResponse(response);
         setWords(words);
       } catch (error) {
