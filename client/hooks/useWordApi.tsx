@@ -16,23 +16,6 @@ export interface ReturnData {
   isError: boolean;
 }
 
-interface RawData {
-  id: number;
-  word: string;
-  meaning: string;
-  word_lang_id: number;
-  meaning_lang_id: number;
-  created_by: string;
-  last_updated_by: string;
-  created_at: string;
-  updated_at: string;
-}
-
-interface ReturnJson {
-  status: string;
-  message: string;
-  data: RawData;
-}
 
 interface UseWordApi {
   (initialUrl: string, initialWord: WordResponse): [
@@ -54,11 +37,7 @@ const useWordApi: UseWordApi = (initialUrl, initialWord) => {
       try {
         const response = await fetch(url);
         console.log(`reponse: ${JSON.stringify(response)}`);
-        const json: ReturnJson = await response.json();
-        console.log(`json: ${JSON.stringify(json)}`);
-        const data: RawData = json.data;
-        console.log(`data: ${JSON.stringify(data)}`);
-        const word: WordResponse = translateToWordResponse(data);
+        const word: WordResponse = await translateToWordResponse(response);
         setWord(word);
       } catch (error) {
         setIsError(true);
