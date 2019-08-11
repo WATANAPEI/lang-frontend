@@ -4,9 +4,10 @@ import useWordsApi, { WordResponse } from "../hooks/useWordsApi.tsx";
 //@ts-ignore
 import WordListComponent, { WordListComponentProps } from "../components/WordListComponent.tsx";
 
-function WordListContainer(backendUrl: string, initialWord: WordResponse) {
+function WordListContainer({ backendUrl }: {backendUrl: string}, initialWord: WordResponse) {
+  const apiPath = `${backendUrl}/words`;
   const [{ words, isLoading, isError }, doFetch] = useWordsApi(
-    backendUrl,[initialWord]);
+    apiPath, [initialWord]);
   const filteredWordResponse = words.map((word: WordResponse) => {
     return {
       id: word.id,

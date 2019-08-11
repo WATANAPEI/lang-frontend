@@ -38,9 +38,9 @@ function App() {
 
   //console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
   if (process.env.NODE_ENV === "production") {
-    backendUrl = "https://wpei.dev/lang/api/v1/words/";
+    backendUrl = "https://wpei.dev/lang/api/v1";
   } else {
-    backendUrl = "http://127.0.0.1:3000/words/";
+    backendUrl = "http://127.0.0.1:3000";
   }
   return (
     <Router>
@@ -53,7 +53,7 @@ function App() {
         </Grid>
         <Grid item xs={9} className={classes.main}>
           <Route id="main" exact path="/lang/words/" render={() => <MainContainer backendUrl={backendUrl} {...initialWord} />} />
-          <Route id="wordList" path="/lang/words/wordlist" render={() => <MainContainer backendUrl={backendUrl} {...initialWord} />} />
+          <Route id="wordList" path="/lang/words/wordlist" render={() => <WordListContainer backendUrl={backendUrl} {...initialWord} />} />
         </Grid>
       </Grid>
     </Router>

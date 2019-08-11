@@ -1,13 +1,21 @@
 // @ts-ignore
-import { WordResponse, RawData } from "./useWordApi.tsx";
+import { WordResponse } from "./useWordApi.tsx";
+// @ts-ignore
+import { WordWithLangResponse } from "./useWordsWithLangsApi.tsx";
 
-interface ReturnJson {
+interface ReturnWordJson {
   status: string;
   message: string;
-  data: RawData[];
+  data: RawWordData[];
 }
 
-interface RawData {
+interface ReturnWordWithLangJson {
+  status: string;
+  message: string;
+  data: RawWordWithLangData[];
+}
+
+interface RawWordData {
   id: number;
   word: string;
   meaning: string;
@@ -19,10 +27,18 @@ interface RawData {
   updated_at: string;
 }
 
+interface RawWordWithLangData {
+  id: number;
+  word: string;
+  meaning: string;
+  word_language: string;
+  meaning_language: string;
+}
+
 export async function translateToWordResponse(response: Response): Promise<WordResponse> {
-  const json: ReturnJson = await response.json();
+  const json: ReturnWordJson = await response.json();
   console.log(`json: ${JSON.stringify(json)}`);
-  const data: RawData[] = json.data;
+  const data: RawWordData[] = json.data;
   console.log(`data: ${JSON.stringify(data)}`);
   return Promise.resolve({
     id: data[0].id,
@@ -34,9 +50,9 @@ export async function translateToWordResponse(response: Response): Promise<WordR
 }
 
 export async function translateToWordsResponse(response: Response): Promise<WordResponse[]> {
-  const json: ReturnJson = await response.json();
+  const json: ReturnWordJson = await response.json();
   console.log(`json: ${JSON.stringify(json)}`);
-  const data: RawData[] = json.data;
+  const data: RawWordData[] = json.data;
   console.log(`data: ${JSON.stringify(data)}`);
   let words: WordResponse[] = [];
   for (const e of data) {
@@ -49,4 +65,22 @@ export async function translateToWordsResponse(response: Response): Promise<Word
     });
   }
   return Promise.resolve(words);
+}
+
+export async function translateToWordsWithLangsResponse(response: Response): Promise<WordWithLangResponse[]> {
+  const json: ReturnWordWithLangJson = await response.json();
+  console.log(`json: ${JSON.stringify(json)}`);
+  const data: RawWordWithLangData[] = json.data;
+  console.log(`data: ${JSON.stringify(data)}`);
+  let wordsWithLangs: WordWithLangResponse[] = [];
+  for (const e of data) {
+    wordsWithLangs.push({
+      id: e.id,
+      word: e.word,
+      meaning: e.meaning,
+      wordLanguage: e.word_language,
+      meaningLanguage: e.meaning_language
+    });
+  }
+  return Promise.resolve(wordsWithLangs);
 }

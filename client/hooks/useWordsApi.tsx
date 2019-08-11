@@ -16,24 +16,6 @@ export interface ReturnData {
   isError: boolean;
 }
 
-interface RawData {
-  id: number;
-  word: string;
-  meaning: string;
-  word_lang_id: number;
-  meaning_lang_id: number;
-  created_by: string;
-  last_updated_by: string;
-  created_at: string;
-  updated_at: string;
-}
-
-interface ReturnJson {
-  status: string;
-  message: string;
-  data: RawData[];
-}
-
 interface UseWordsApi {
   (initialUrl: string, initialWord: WordResponse[]): [
     ReturnData,

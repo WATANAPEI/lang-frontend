@@ -49,8 +49,8 @@ const WordListComponent: React.FC<WordListComponentProps> = ({
   const classes = useStyles();
   const wordLists = wordListProps.map((word: WordListProps) =>
     <Paper
-      id={word.id.toString()}
-      key={word.id.toString()}
+      id={String(word.id)}
+      key={String(word.id)}
       className={classes.paper}
     >
       <Grid container direction="row" spacing={2}>
