@@ -1,7 +1,7 @@
 import React from "react";
 import { act } from "react-dom/test-utils";
 // @ts-ignore
-import WordList from "../components/WordList.tsx";
+import WordListContainer from "../container/WordListContainer.tsx";
 import { createMount } from "@material-ui/core/test-utils";
 // @ts-ignore
 import { WordResponse } from "../hooks/useWordApi.tsx";
@@ -10,8 +10,16 @@ import { mockWordsFactory, MockFetch } from "./MockFactory.tsx";
 import "isomorphic-fetch";
 import Paper from "@material-ui/core/Paper";
 
-describe("<WordList />", () => {
+describe("<WordListContainer />", () => {
   it("has Progress indication and Paper will appear after loading", done => {
+    const backendUrl = "http://127.0.0.1:3000";
+    const initialWord = [{
+      id: -1,
+      word: "Initialize error",
+      meaning: "Initialize error",
+      wordLanguageID: -1,
+      meaningLanguageID: -1
+    }];
     const mockUrlList = [
         "http://127.0.0.1:3000/words"
     ];
@@ -29,7 +37,7 @@ describe("<WordList />", () => {
     const fetchSpy = jest.spyOn(window, "fetch");
 
     act(() => {
-      const wrapper = createMount()(<WordList />);
+      const wrapper = createMount()(<WordListContainer backendUrl={backendUrl} initialWord={initialWord} />);
       setImmediate(() => {
         //console.log(wrapper.debug());
         expect(wrapper.find("#loadingMessage").exists()).toEqual(true);
@@ -67,7 +75,7 @@ describe("<WordList />", () => {
     const fetchSpy = jest.spyOn(window, "fetch");
 
     act(() => {
-      const wrapper = createMount()(<WordList />);
+      const wrapper = createMount()(<WordListContainer />);
       setImmediate(() => {
         wrapper.update();
         //console.log(wrapper.debug());

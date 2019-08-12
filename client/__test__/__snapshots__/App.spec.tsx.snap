@@ -36,9 +36,9 @@ exports[`<App /> renders properly 1`] = `
         render={[Function]}
       />
       <Route
-        component={[Function]}
         id="wordList"
         path="/lang/words/wordlist"
+        render={[Function]}
       />
     </WithStyles(ForwardRef(Grid))>
   </WithStyles(ForwardRef(Grid))>

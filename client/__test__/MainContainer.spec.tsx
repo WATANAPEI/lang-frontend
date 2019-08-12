@@ -17,7 +17,7 @@ import toJson from "enzyme-to-json";
 
 describe("<MainContainer />", () => {
   describe("MainContainer passes arguments to MainComponent", () => {
-    const backendUrl = "http://127.0.0.1:3000/words/";
+    const backendUrl = "http://127.0.0.1:3000";
     const initialWord = {
       id: -1,
       word: "Initialize error",

@@ -11,7 +11,7 @@ export interface WordListComponentProps {
   isError: boolean;
 }
 
-interface WordListProps {
+export interface WordListProps {
   id: number;
   wordFront: string;
   wordBack: string;
