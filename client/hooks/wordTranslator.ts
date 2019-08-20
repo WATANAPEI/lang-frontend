@@ -15,7 +15,7 @@ interface ReturnWordWithLangJson {
   data: RawWordWithLangData[];
 }
 
-interface RawWordData {
+export interface RawWordData {
   id: number;
   word: string;
   meaning: string;
@@ -27,7 +27,7 @@ interface RawWordData {
   updated_at: string;
 }
 
-interface RawWordWithLangData {
+export interface RawWordWithLangData {
   id: number;
   word: string;
   meaning: string;

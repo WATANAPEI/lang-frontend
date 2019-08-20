@@ -39,7 +39,7 @@ describe("<WordListContainer />", () => {
     act(() => {
       const wrapper = createMount()(<WordListContainer backendUrl={backendUrl} initialWord={initialWord} />);
       setImmediate(() => {
-        //console.log(wrapper.debug());
+        console.log(wrapper.debug());
         expect(wrapper.find("#loadingMessage").exists()).toEqual(true);
         expect(wrapper).toMatchSnapshot();
         wrapper.update();

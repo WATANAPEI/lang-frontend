@@ -2,6 +2,10 @@
 import MockFetch from "./useWordApi.spec.tsx";
 // @ts-ignore
 import { WordResponse } from "../hooks/useWordApi.tsx";
+// @ts-ignore
+import { RawWordData, RawWordWithLangData } from "../hooks/wordTranslator.ts";
+// @ts-ignore
+import { WordWithLangResponse } from "../hooks/useWordsWithLangsApi.tsx";
 
 export interface MockWordFactory {
   (condition: "success" | "failed", id: number, correctUrl: string): [
@@ -16,6 +20,14 @@ export interface MockWordsFactory {
     MockFetch
   ];
 }
+
+export interface MockWordsWithLangsFactory {
+  (condition: "success" | "failed", id: number, correctUrl: string): [
+    RawWordWithLangData[],
+    MockFetch
+  ];
+}
+
 export interface MockFetch {
   (accessedUrl: string): Promise<Response>;
 }
@@ -181,5 +193,86 @@ export const mockWordsFactory: MockWordsFactory = (condition, id, correctUrl) =>
       return await Promise.reject(mockResponse);
     };
     return [mockWordsResponse, mockFailedFetch];
+  }
+};
+
+export const mockWordsWithLangsFactory: MockWordsWithLangsFactory = (condition, id, correctUrl) => {
+  let mockWordsWithLangsResponse: RawWordWithLangData[] = [];
+  let mockResponse: Response;
+  let mockFailedResponse: Promise<{}>;
+  let mockSuccessFetch: MockFetch;
+  let mockFailedFetch: MockFetch;
+  const mockNotFoundResponse: RawWordWithLangData[] = [
+    {
+      id: -2,
+      word: "Word_Not_Found",
+      meaning: "Meaning_Not_Found",
+      word_language: "Word_Lang_Not_Fount",
+      meaning_language: "Meaning_Lang_Not_Fount"
+    }
+  ];
+
+  console.log(`mock ${id} is making`);
+  if (condition === "success") {
+    for (let i = 1; i<=10; i++) {
+      mockWordsWithLangsResponse.push({
+        id: `${100 * i + id}`,
+        word: `sucess_word_${i}_${id}`,
+        meaning: `success_meaning_${i}_${id}`,
+        word_language: `sucess_word_lang_${i}_${id}`,
+        meaning_language: `success_meaning_lang_${i}_${id}`
+      });
+    }
+    mockSuccessFetch = async (accessedUrl: string) => {
+      if (accessedUrl == correctUrl) {
+        mockResponse = new Response();
+        mockResponse.json = async () => {
+          console.log(`mockResponse succeed`);
+          return Promise.resolve({
+            data: mockWordsWithLangsResponse
+          });
+        };
+      } else {
+        mockResponse = new Response();
+        mockResponse.json = async () => {
+          console.log(`mockResponse failed`);
+          return Promise.reject({
+            data: mockNotFoundResponse
+          });
+        };
+      }
+      console.log(`mockSuccessFetch was called`);
+      return Promise.resolve(mockResponse);
+    };
+    return [mockWordsWithLangsResponse, mockSuccessFetch];
+  } else {
+    for (let i = 1; i <= 10; i++) {
+      mockWordsWithLangsResponse.push({
+        id: `${-100 * i - id}`,
+        word: `failed_word_${i}_${id}`,
+        meaning: `failed_meaning_${i}_${id}`,
+        word_language: `failed_word_lang_${i}_${id}`,
+        meaning_language: `failed_meaning_lang_${i}_${id}`
+      });
+    }
+    mockFailedFetch = async (accessedUrl: string) => {
+      if (accessedUrl == correctUrl) {
+        mockResponse = new Response();
+        mockResponse.json = async () => {
+          return Promise.resolve({
+            data: mockWordsWithLangsResponse
+          });
+        };
+      } else {
+        mockResponse = new Response();
+        mockResponse.json = async () => {
+          return Promise.reject({
+            data: mockNotFoundResponse
+          });
+        };
+      }
+      return Promise.reject(mockResponse);
+    };
+    return [mockWordsWithLangsResponse, mockFailedFetch];
   }
 };
