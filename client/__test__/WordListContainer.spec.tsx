@@ -9,9 +9,19 @@ import { WordResponse } from "../hooks/useWordApi.tsx";
 import { mockWordsFactory, MockFetch } from "./MockFactory.tsx";
 import "isomorphic-fetch";
 import Paper from "@material-ui/core/Paper";
+import { unmountComponentAtNode, render } from "react-dom";
 
 describe("<WordListContainer />", () => {
-  it("has Progress indication and Paper will appear after loading", done => {
+  let container: Element;
+  beforeEach(() => {
+    container = document.createElement("div");
+    document.body.appendChild(container);
+  });
+  afterEach(() => {
+    unmountComponentAtNode(container);
+    container.remove();
+  });
+  it("has Progress indication and Paper will appear after loading", async () => {
     const backendUrl = "http://127.0.0.1:3000";
     const initialWord = [{
       id: -1,
@@ -35,29 +45,29 @@ describe("<WordListContainer />", () => {
     window.fetch = jest.fn().
       mockImplementationOnce(mockFetchArray[0]);
     const fetchSpy = jest.spyOn(window, "fetch");
-
-    act(() => {
-      const wrapper = createMount()(<WordListContainer backendUrl={backendUrl} initialWord={initialWord} />);
-      setImmediate(() => {
-        console.log(wrapper.debug());
-        expect(wrapper.find("#loadingMessage").exists()).toEqual(true);
-        expect(wrapper).toMatchSnapshot();
-        wrapper.update();
-        //console.log(wrapper.debug());
-        //console.log(mockWordsArray[0]);
-        expect(wrapper.find(Paper)).toHaveLength(mockWordsArray[0].length);
-        expect(wrapper.find(".word_id").exists()).toEqual(true);
-        expect(wrapper.find(".word_word").exists()).toEqual(true);
-        expect(wrapper.find(".word_meaning").exists()).toEqual(true);
-        expect(fetchSpy).toHaveBeenCalledTimes(1);
-        expect(fetchSpy).toHaveBeenLastCalledWith(mockUrlList[0]);
-        expect(wrapper).toMatchSnapshot();
-        wrapper.unmount();
-        done();
-      });
+    await act(async () => {
+      render(<WordListContainer backendUrl={backendUrl} initialWord={initialWord} />, container);
     });
+    container && console.log(container.innerHTML);
+    //let paper = container.querySelector("Paper");
+    //paper && console.log(paper.innerHTML);
+    expect(container.querySelector("#loadingMessage")).toBeNull();
+    expect(container.innerHTML).toMatchSnapshot();
+    expect(container.querySelectorAll("h1.word_id")).toHaveLength(mockWordsArray[0].length);
+    expect(container.querySelectorAll("h3.word_word")).toHaveLength(mockWordsArray[0].length);
+    expect(container.querySelectorAll("h3.word_meaning")).toHaveLength(mockWordsArray[0].length);
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
+    expect(fetchSpy).toHaveBeenLastCalledWith(mockUrlList[0]);
   });
-  it("render error message when data loading failed", done => {
+  it("render error message when data loading failed", async () => {
+    const backendUrl = "http://127.0.0.1:3000";
+    const initialWord = [{
+      id: -1,
+      word: "Initialize error",
+      meaning: "Initialize error",
+      wordLanguageID: -1,
+      meaningLanguageID: -1
+    }];
     const mockUrlList = [
         "http://127.0.0.1:3000/words"
     ];
@@ -73,17 +83,11 @@ describe("<WordListContainer />", () => {
     window.fetch = jest.fn().
       mockImplementationOnce(mockFetchArray[0]);
     const fetchSpy = jest.spyOn(window, "fetch");
-
-    act(() => {
-      const wrapper = createMount()(<WordListContainer />);
-      setImmediate(() => {
-        wrapper.update();
-        //console.log(wrapper.debug());
-        expect(wrapper.find("#loadingErrorMessage").exists()).toEqual(true);
-        expect(wrapper).toMatchSnapshot();
-        wrapper.unmount();
-        done();
-      });
+    await act(async () => {
+      render(<WordListContainer backendUrl={backendUrl} initialWord={initialWord} />, container);
     });
+    //console.log(container.innerHTML);
+    expect(container.querySelector("#loadingErrorMessage")).not.toBeNull();
+    expect(container.innerHTML).toMatchSnapshot();
   });
 });
