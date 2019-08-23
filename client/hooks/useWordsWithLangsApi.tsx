@@ -6,8 +6,8 @@ export interface WordWithLangResponse {
   id: number;
   word: string;
   meaning: string;
-  wordWithLang: string;
-  meaningWithLang: string;
+  wordLanguage: string;
+  meaningLanguage: string;
 }
 
 export interface ReturnData {

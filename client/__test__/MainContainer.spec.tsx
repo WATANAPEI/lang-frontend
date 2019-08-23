@@ -51,7 +51,7 @@ describe("<MainContainer />", () => {
       act(() => {
         wrapper = mount(<MainContainer backendUrl={backendUrl} initialWord={initialWord} />);
         const outProps: MainComponentProps = wrapper.find(MainComponent).props();
-        expect(outProps.isLoading).toBe(true);
+        expect(outProps.isLoading).toBe(false);
         expect(outProps.isError).toBe(false);
         console.log(outProps);
         setImmediate(() => {
