@@ -123,6 +123,7 @@ describe("test hooks", () => {
     //  const wrapper = mount(<MockReactComponent {...mockUrlList} />);
       render(<MockReactComponent {...mockUrlList} />, container);
     });
+    container && console.log(container.innerHTML);
 //    setImmediate(() => {
 //      wrapper.update();
 //      console.log(wrapper.debug());
